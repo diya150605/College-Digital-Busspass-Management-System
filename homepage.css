@@ -1,0 +1,100 @@
+:root{
+  --bg:#f2f6fa;
+  --card:#ffffff;
+  --primary:#174b90; /* deep blue header for card */
+  --nav:#0f2630;     /* topbar & footer */
+  --muted:#7b8590;
+  --gold:#e9ce60;    /* table header gold */
+  --circle:#153f79;  /* route number circle */
+  --fee-green:#1b8c77;
+  --teal:#0f7467;    /* stats card */
+  --radius:10px;
+  --container:1100px;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(#f5f7fa,#f2f6fa 60%);
+  color:#232a33;
+  font-size:15px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Container */
+.container{max-width:var(--container);margin:0 auto;padding:0 20px}
+
+/* Topbar */
+.topbar{background:var(--nav);color:#fff;padding:12px 0;position:sticky;top:0;z-index:30}
+.topbar-inner{display:flex;align-items:center;gap:20px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--nav);display:flex;align-items:center;justify-content:center;font-weight:700}
+.brand-text .title{font-weight:600}
+.brand-text .subtitle{font-size:12px;color:#bcd4e4}
+.nav{display:flex;gap:18px;align-items:center}
+.nav a{color:#e9f2fb;text-decoration:none;font-size:14px}
+.nav a.active{color:#fff;text-decoration:underline}
+.actions{display:flex;gap:8px}
+.actions button{background:transparent;color:#e9f2fb;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:6px;cursor:pointer}
+.support{background:#1e8b78;padding:6px 10px;border-radius:6px;border:none;color:#fff}
+
+/* Main */
+.main{padding:40px 0 60px}
+
+/* Routes card */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:0 6px 18px rgba(27,40,61,0.06);overflow:hidden;margin-bottom:26px}
+.routes-top{background:linear-gradient(180deg,var(--primary),#235ea7);padding:18px;border-radius:var(--radius) var(--radius) 0 0;color:#fff}
+.routes-title h3{margin:0}
+.routes-title .muted{color:#dbe9ff;margin-top:6px;font-size:13px}
+
+.routes-table-wrap{padding:0 0 18px}
+.routes-table{width:100%;border-collapse:collapse}
+.routes-table thead tr{background:var(--gold);color:#1b1b1b}
+.routes-table th{padding:12px 18px;text-align:left}
+.routes-table td{padding:14px 18px;border-top:1px solid #eef3f6;background:#fff}
+.col-num{width:110px}
+.col-fee{text-align:right;width:140px}
+
+/* route number circle */
+.routes-table td.num{width:80px;text-align:center}
+.routes-table td.num .num-circle{display:inline-block;width:34px;height:34px;border-radius:50%;background:var(--circle);color:#fff;line-height:34px;font-weight:700}
+
+/* fee color */
+.routes-table td.fee{color:var(--fee-green);font-weight:600;text-align:right}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:28px 0}
+.stat{padding:26px;border-radius:10px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90px;box-shadow:0 8px 20px rgba(20,60,58,0.06)}
+.card-green{background:var(--teal)}
+.stat-number{font-size:28px;font-weight:700}
+.stat-label{font-size:14px;margin-top:6px;opacity:0.95;text-align:center}
+
+/* Gallery */
+.gallery-card{padding:0}
+.gallery-head{background:var(--primary);color:#fff;padding:10px 18px;font-weight:600}
+.gallery-row{display:flex;gap:14px;padding:18px;overflow:auto}
+.gallery-row img{height:110px;border-radius:10px;object-fit:cover;box-shadow:0 6px 18px rgba(27,40,61,0.06);min-width:210px}
+
+/* Footer */
+.footer{background:var(--nav);color:#cbdbe7;padding:36px 0 14px;margin-top:28px}
+.footer-inner{display:flex;flex-direction:column;gap:18px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.col h4{color:#f7c948;margin-bottom:8px;font-size:15px}
+.col ul{list-style:none;padding:0;margin:0}
+.col ul li{color:#c9d6df;margin-bottom:8px;font-size:14px}
+.footer-bottom{text-align:center;color:#9fb0bf;padding-top:12px;border-top:1px solid rgba(255,255,255,0.03);font-size:13px}
+
+/* Table responsive */
+@media (max-width:900px){
+  .stats-grid{grid-template-columns:1fr}
+  .gallery-row img{height:90px;min-width:160px}
+  .cols{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .routes-table thead tr{display:none}
+  .routes-table td{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:12px}
+  .routes-table td.num{width:auto}
+  .routes-table td.fee{text-align:right}
+  .cols{grid-template-columns:1fr}
+}

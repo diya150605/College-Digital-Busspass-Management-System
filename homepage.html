@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GUNI DigiPass — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="homepage.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Transportation Portal</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="homepage.html" class="active">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="kdp.html">Login</a>
+      </nav>
+
+      <div class="actions">
+        <button class="lang">EN</button>
+        <button class="support">Support</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <!-- Routes Card -->
+      <section class="card routes-card">
+        <div class="routes-top">
+          <div class="routes-title">
+            <h3>Transportation Routes & Fees</h3>
+            <p class="muted">Choose from 23 routes across Gujarat</p>
+          </div>
+        </div>
+
+        <div class="routes-table-wrap">
+          <table class="routes-table" aria-label="Routes and Fees">
+            <thead>
+              <tr>
+                <th class="col-num">Route No.</th>
+                <th class="col-detail">Route Details</th>
+                <th class="col-fee">Annual Fee</th>
+              </tr>
+            </thead>
+            <tbody id="routes-body">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="stats-grid">
+        <div class="stat card-green">
+          <div class="stat-number">69</div>
+          <div class="stat-label">Total Buses</div>
+        </div>
+        <div class="stat card-green">
+          <div class="stat-number">700+</div>
+          <div class="stat-label">Students from Ahmedabad & Gandhinagar</div>
+        </div>
+        <div class="stat card-green">
+          <div class="stat-number">1900+</div>
+          <div class="stat-label">Students from North Gujarat</div>
+        </div>
+        <div class="stat card-green">
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Cities Covered</div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="card gallery-card">
+        <div class="gallery-head">Our Bus Fleet Gallery</div>
+        <div class="gallery-row" id="gallery-row">
+          <!-- images populated by JS -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="homepage.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

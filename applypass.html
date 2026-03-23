@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNI DigiPass — Apply Pass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="applypass.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Transportation Portal</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a class="active" href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="kdp.html">Login</a>
+      </nav>
+      <div class="actions">
+        <button class="lang">EN</button>
+        <button class="support">Support</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <div class="apply-card card">
+        <!-- Stepper -->
+        <div class="stepper">
+          <div class="step-item active" data-step="0">
+            <div class="step-circle">1</div>
+            <div class="step-label">Personal Details</div>
+          </div>
+          <div class="step-item" data-step="1">
+            <div class="step-circle">2</div>
+            <div class="step-label">Route Selection</div>
+          </div>
+          <div class="step-item" data-step="2">
+            <div class="step-circle">3</div>
+            <div class="step-label">Document Upload</div>
+          </div>
+          <div class="step-item" data-step="3">
+            <div class="step-circle">4</div>
+            <div class="step-label">Payment</div>
+          </div>
+          <div class="step-item" data-step="4">
+            <div class="step-circle">5</div>
+            <div class="step-label">Confirmation</div>
+          </div>
+        </div>
+
+        <div class="apply-body">
+          <!-- Step 1: Personal Details -->
+          <form id="step-0" class="step active">
+            <h4>Personal Information</h4>
+            <div class="grid">
+              <label class="field">
+                <span>Full Name</span>
+                <input id="app-fullname" type="text" placeholder="As per university records">
+              </label>
+              <label class="field">
+                <span>Enrollment Number</span>
+                <input id="app-enrollment" type="text" placeholder="e.g., 21012345">
+              </label>
+
+              <label class="field">
+                <span>Date of Birth</span>
+                <input id="app-dob" type="date">
+              </label>
+              <label class="field">
+                <span>Gender</span>
+                <select id="app-gender">
+                  <option value="">Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Mobile Number</span>
+                <input id="app-mobile" type="tel" maxlength="10" placeholder="10-digit mobile">
+              </label>
+              <label class="field">
+                <span>Email Address</span>
+                <input id="app-email" type="email" placeholder="student@example.com">
+              </label>
+
+              <label class="field full">
+                <span>Permanent Address</span>
+                <textarea id="app-address" rows="3" placeholder="Enter complete address"></textarea>
+              </label>
+            </div>
+
+            <div class="actions-row">
+              <button type="button" class="btn ghost" disabled>Previous</button>
+              <button type="button" class="btn primary next-btn" data-next="1">Next Step</button>
+            </div>
+          </form>
+
+          <!-- Step 2: Route Selection -->
+          <div id="step-1" class="step">
+            <h4>Select Your Route</h4>
+            <div class="routes-list" id="routes-list">
+              <!-- routes populated by JS (default shown on page load) -->
+            </div>
+
+            <div class="fee-summary card small" id="fee-summary">
+              <div class="fee-header">Fee Summary</div>
+              <div class="fee-row"><span>Bus Pass Fee</span><span id="fee-pass">₹0</span></div>
+              <div class="fee-row"><span>Processing Fee</span><span id="fee-proc">₹500</span></div>
+              <div class="fee-row total"><span>Total Amount</span><span id="fee-total">₹0</span></div>
+            </div>
+
+            <div class="actions-row">
+              <button type="button" class="btn ghost prev-btn" data-prev="0">Previous</button>
+              <button type="button" class="btn primary next-btn" data-next="2">Next Step</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Document Upload -->
+          <div id="step-2" class="step">
+            <h4>Document Upload</h4>
+
+            <div class="doc-grid">
+              <label class="doc-field">
+                <span>ID Card (Student ID)</span>
+                <input id="doc-id" type="file" accept="image/*,application/pdf">
+                <div class="file-list" id="file-id">No file chosen</div>
+              </label>
+
+              <label class="doc-field">
+                <span>Photo (Passport size)</span>
+                <input id="doc-photo" type="file" accept="image/*">
+                <div class="file-list" id="file-photo">No file chosen</div>
+              </label>
+
+              <label class="doc-field full">
+                <span>Any other supporting doc (optional)</span>
+                <input id="doc-other" type="file" accept="image/*,application/pdf">
+                <div class="file-list" id="file-other">No file chosen</div>
+              </label>
+            </div>
+
+            <div class="actions-row">
+              <button type="button" class="btn ghost prev-btn" data-prev="1">Previous</button>
+              <button type="button" class="btn primary next-btn" data-next="3">Next Step</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Payment -->
+          <div id="step-3" class="step">
+            <h4>Payment</h4>
+            <div class="payment-card card small">
+              <p class="muted">You will be charged the total amount shown in Fee Summary. For demo this is a simulated payment.</p>
+              <div class="fee-row"><span>Selected pass</span><strong id="payment-pass">—</strong></div>
+              <div class="fee-row"><span>Total</span><strong id="payment-total">₹0</strong></div>
+            </div>
+
+            <div class="actions-row">
+              <button type="button" class="btn ghost prev-btn" data-prev="2">Previous</button>
+              <button type="button" class="btn primary" id="pay-btn">Pay & Confirm</button>
+            </div>
+          </div>
+
+          <!-- Step 5: Confirmation -->
+          <div id="step-4" class="step">
+            <div class="confirm-box">
+              <div class="confirm-icon">✓</div>
+              <h3>Application Submitted</h3>
+              <p>Your bus pass application has been received. You will get a confirmation on your registered mobile/email.</p>
+              <div class="actions-row">
+                <a href="dashboard.html" class="btn primary">Go to Dashboard</a>
+                <button class="btn ghost" id="apply-another">Apply another</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer (same style as other pages) -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul><li>About GUNI</li><li>Admission</li><li>Academics</li><li>Transportation</li></ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul><li>Hostel</li><li>Library</li><li>Sports</li><li>Cafeteria</li></ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul><li>Events</li><li>News</li><li>Placements</li><li>Research</li></ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="applypass.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

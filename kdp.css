@@ -1,0 +1,146 @@
+:root{
+  --bg:#f2f6fa;
+  --card:#ffffff;
+  --primary:#1f4b93; /* deep blue used in screenshots */
+  --muted:#9aa3b2;
+  --footer:#0f2630;
+  --accent:#f7c948; /* gold-ish for footer headings */
+  --radius:10px;
+  --max-width:950px;
+  --container-padding:20px;
+  --shadow: 0 6px 18px rgba(27,40,61,0.08);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(#f5f7fa, #f2f6fa 60%);
+  color:#232a33;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  font-size:15px;
+}
+
+/* Container */
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* Topbar */
+.topbar{
+  background:var(--footer);
+  color:#fff;
+  padding:12px 0;
+}
+.topbar-inner{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  justify-content:space-between;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:44px;height:44px;border-radius:50%;
+  background:#fff;color:var(--footer);display:flex;align-items:center;justify-content:center;font-weight:700;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15)
+}
+.brand-text .title{font-weight:600}
+.brand-text .subtitle{font-size:12px;color:#bcd4e4}
+
+/* Nav */
+.nav{display:flex;gap:18px;align-items:center}
+.nav a{color:#e9f2fb;text-decoration:none;font-size:14px}
+.actions{display:flex;gap:8px}
+.actions button{background:transparent;color:#e9f2fb;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:6px;cursor:pointer}
+.support{background:#10707e;padding:6px 10px;border-radius:6px;border:none;color:#fff}
+
+/* Main card area */
+.main{padding:40px 0 60px}
+.card-wrapper{display:flex;justify-content:center}
+.card{
+  background:var(--card);
+  width:100%;
+  max-width:var(--max-width);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+/* Tabs */
+.tabs{display:flex;align-items:stretch}
+.tab{
+  flex:1;
+  padding:14px 18px;
+  text-align:center;
+  border:none;
+  cursor:pointer;
+  background:#fff;
+  font-weight:600;
+  color:#5b6b7d;
+  border-bottom:1px solid #e9edf2;
+}
+.tab.active{
+  background:var(--primary);
+  color:#fff;
+}
+
+/* Body inside card */
+.card-body{padding:34px 48px}
+.form{display:none}
+.form.active{display:block}
+.form-title{margin:8px 0 4px;text-align:center;color:var(--primary);font-weight:700}
+.form-sub{margin:0 0 18px;text-align:center;color:#7a8896}
+
+/* grid layout for register form */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px 18px;
+  margin-bottom:18px;
+}
+.field{display:flex;flex-direction:column;margin-bottom:12px}
+.field-label{font-size:13px;color:#6f7b88;margin-bottom:8px}
+.field input, .field select, .input-with-icon input{
+  padding:12px 14px;
+  border-radius:8px;
+  border:1px solid #e3e7eb;
+  font-size:14px;
+  outline:none;
+  background:#fff;
+  transition:box-shadow .15s, border-color .15s;
+}
+.field input:focus, .field select:focus, .input-with-icon input:focus{
+  border-color:rgba(31,75,147,0.9);
+  box-shadow:0 0 0 4px rgba(31,75,147,0.06);
+}
+
+/* input with icon */
+.input-with-icon{display:flex;align-items:center;gap:10px;border-radius:8px;padding:6px 10px;background:#fff;border:1px solid #e3e7eb}
+.input-with-icon .icon{flex:0 0 18px;opacity:0.9}
+.input-with-icon input{border:none;box-shadow:none;padding:8px 6px;flex:1}
+
+/* single column full width */
+.full{width:100%}
+.btn{display:inline-block;padding:12px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary.full{margin-top:6px}
+/* Footer spacing */
+.footer{background:var(--footer);color:#cbdbe7;padding:36px 0 14px;margin-top:28px}
+.footer-inner{display:flex;flex-direction:column;gap:18px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.col h4{color:var(--accent);margin-bottom:8px;font-size:15px}
+.col ul{list-style:none;padding:0;margin:0}
+.col ul li{color:#c9d6df;margin-bottom:8px;font-size:14px}
+.footer-bottom{text-align:center;color:#9fb0bf;padding-top:12px;border-top:1px solid rgba(255,255,255,0.03);font-size:13px}
+
+/* Responsive */
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .nav{display:none}
+  .topbar-inner{padding:0 6px}
+  .card-body{padding:28px 20px}
+}

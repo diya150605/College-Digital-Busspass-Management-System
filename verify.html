@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GUNI DigiPass — Verify Pass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="verify.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Transportation Portal</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a class="active" href="verify.html">Verify Pass</a>
+        <a href="kdp.html">Login</a>
+      </nav>
+      <div class="actions">
+        <button class="lang">EN</button>
+        <button class="support">Support</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="card verify-card">
+        <div class="verify-header">
+          <h3>Pass Verification Portal</h3>
+          <p class="sub">Verify student bus passes for authenticity</p>
+        </div>
+
+        <div class="verify-controls">
+          <button class="tab-btn active" data-mode="scan" id="btn-scan">
+            <span class="icon">🔲</span> Scan QR Code
+          </button>
+          <button class="tab-btn" data-mode="manual" id="btn-manual">
+            <span class="icon">🔍</span> Manual Entry
+          </button>
+        </div>
+
+        <div class="verify-body">
+          <!-- Scan area (default) -->
+          <div id="mode-scan" class="mode active">
+            <div class="qr-frame" id="qr-frame" title="Click to simulate scanning a QR code">
+              <div class="qr-icon">▣▣ ▣▣</div>
+              <div class="qr-hint">Position QR code within frame<br><small>Camera will automatically scan the QR code</small></div>
+            </div>
+          </div>
+
+          <!-- Manual entry area -->
+          <div id="mode-manual" class="mode">
+            <div class="manual-row">
+              <label class="field">
+                <span class="label-text">Enter Pass ID</span>
+                <input id="manual-pass" type="text" placeholder="e.g., BP-2026-012345">
+              </label>
+              <button id="manual-verify" class="btn primary">Verify</button>
+            </div>
+          </div>
+
+          <!-- Result area (shows verification details) -->
+          <div id="verify-result" class="result-card card" hidden>
+            <div class="result-header">
+              <div class="status-pill" id="result-status">Valid</div>
+              <div class="result-actions">
+                <button class="btn ghost" id="result-close">Close</button>
+              </div>
+            </div>
+
+            <div class="result-body">
+              <div class="result-left">
+                <h4 id="r-name">Student Name</h4>
+                <div class="muted" id="r-sub">Enrollment No: — | Dept: —</div>
+
+                <div class="meta-list">
+                  <div><strong>Pass ID:</strong> <span id="r-passid">—</span></div>
+                  <div><strong>Route:</strong> <span id="r-route">—</span></div>
+                  <div><strong>Issue Date:</strong> <span id="r-issue">—</span></div>
+                  <div><strong>Valid Till:</strong> <span id="r-valid">—</span></div>
+                </div>
+              </div>
+
+              <div class="result-right">
+                <div class="qr-mini" id="r-qr">QR</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Not found / invalid message -->
+          <div id="verify-error" class="card error-card" hidden>
+            <div class="error-text"><strong>Pass not found</strong><div class="muted">The scanned or entered pass ID does not match any active record.</div></div>
+            <div class="error-actions">
+              <button class="btn primary" id="retry-scan">Retry Scan</button>
+              <button class="btn ghost" id="retry-manual">Try Manual Entry</button>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <!-- Guidelines -->
+          <div class="guidelines">
+            <div class="guideline card small">
+              <h5>For Bus Drivers</h5>
+              <ul>
+                <li>Scan student QR code before boarding</li>
+                <li>Verify photo matches student</li>
+                <li>Check validity date</li>
+              </ul>
+            </div>
+
+            <div class="guideline card small">
+              <h5>For Security Personnel</h5>
+              <ul>
+                <li>Use manual entry if QR is damaged</li>
+                <li>Report suspicious passes immediately</li>
+                <li>Contact admin for support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="verify.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

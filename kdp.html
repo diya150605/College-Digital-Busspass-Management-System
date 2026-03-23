@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNI DigiPass — Login / Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="kdp.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Transportation Portal</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="kdp.html">Login</a>
+      </nav>
+      <div class="actions">
+        <button class="lang">EN</button>
+        <button class="support">Support</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="container">
+      <div class="card-wrapper">
+        <div class="card">
+          <div class="tabs">
+            <button class="tab active" data-target="login">Login</button>
+            <button class="tab" data-target="register">Register</button>
+          </div>
+          <div class="card-body">
+            <!-- LOGIN -->
+            <form id="login" class="form active">
+              <h3 class="form-title">Student Login</h3>
+              <p class="form-sub">Login using your registered mobile number</p>
+              <label class="field">
+                <span class="field-label">Mobile Number</span>
+                <div class="input-with-icon">
+                  <svg class="icon phone" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M6.6 10.2c1.2 2.3 2.9 4 5.2 5.2l1.3-1.3c.2-.2.5-.3.8-.2 1 .3 2.1.5 3.4.5.4 0 .8.3.9.7l.5 2.1c.1.5-.2 1-.7 1.2C18.7 21 10.9 21 3.8 13.9  -..."/></svg>
+                  <input id="login-mobile" type="tel" placeholder="Enter 10-digit mobile number" maxlength="10" />
+                </div>
+              </label>
+              <button type="submit" class="btn primary full">Send OTP</button>
+            </form>
+
+            <!-- REGISTER -->
+            <form id="register" class="form">
+              <h3 class="form-title">New Student Registration</h3>
+              <p class="form-sub">Register to apply for bus pass</p>
+
+              <div class="grid">
+                <label class="field">
+                  <span class="field-label">Enrollment Number</span>
+                  <input id="enrollment" type="text" placeholder="e.g., 21012345" />
+                </label>
+
+                <label class="field">
+                  <span class="field-label">Full Name</span>
+                  <input id="fullname" type="text" placeholder="As per university records" />
+                </label>
+
+                <label class="field">
+                  <span class="field-label">Mobile Number</span>
+                  <div class="input-with-icon">
+                    <svg class="icon phone" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M6.6 10.2c1.2 2.3 2.9 4 5.2 5.2l1.3-1.3c.2-.2.5-.3.8-.2 1 .3 2.1.5 3.4.5.4 0 .8.3.9.7l.5 2.1c.1.5-.2 1-.7 1.2C18.7 21 10.9 21 3.8 13.9  -..."/></svg>
+                    <input id="reg-mobile" type="tel" placeholder="10-digit mobile" maxlength="10" />
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span class="field-label">Email Address</span>
+                  <div class="input-with-icon">
+                    <svg class="icon mail" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M20 4H4c-1.1 0-2 .9-2 2v12..."/></svg>
+                    <input id="email" type="email" placeholder="student@example.com" />
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span class="field-label">Aadhaar Number</span>
+                  <div class="input-with-icon">
+                    <svg class="icon id" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
+                    <input id="aadhaar" type="text" placeholder="12-digit Aadhaar" maxlength="12" />
+                  </div>
+                </label>
+
+                <label class="field">
+                  <span class="field-label">Department</span>
+                  <select id="department">
+                    <option value="">Select Department</option>
+                    <option>Computer Science</option>
+                    <option>Mechanical</option>
+                    <option>Electronics</option>
+                    <option>Management</option>
+                  </select>
+                </label>
+              </div>
+
+              <button type="submit" class="btn primary full">Register & Send OTP</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="kdp.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

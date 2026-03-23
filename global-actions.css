@@ -1,0 +1,40 @@
+/* Shared styles for language and support buttons + modal */
+.actions .lang,
+.actions .support {
+  appearance: none;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: white;
+  color: #1f2937;
+  padding: 6px 10px;
+  margin-left: 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.actions .lang:hover,
+.actions .support:hover {
+  background: #f3f4f6;
+}
+
+/* Support modal */
+.ga-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.ga-modal {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+}
+.ga-modal h3 { margin: 0 0 8px 0; font-size: 18px; }
+.ga-modal p { margin: 0 0 12px 0; color: #374151; }
+.ga-modal .ga-actions { text-align: right; }
+.ga-modal .btn { margin-left: 8px; }
