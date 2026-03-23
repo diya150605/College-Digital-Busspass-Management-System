@@ -6,39 +6,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Routes data (23 routes)
   const routes = [
-    { id:1, title:'Ahmedabad - Ganpat University', desc:'Daily service, AC buses', fee:35000 },
-    { id:2, title:'Gandhinagar - Ganpat University', desc:'Daily service, AC buses', fee:28000 },
-    { id:3, title:'Mehsana - Ganpat University', desc:'Daily service, AC buses', fee:12000 },
-    { id:4, title:'Palanpur - Ganpat University', desc:'Daily service, AC buses', fee:18000 },
-    { id:5, title:'Patan - Ganpat University', desc:'Daily service, AC buses', fee:15000 },
-    { id:6, title:'Visnagar - Ganpat University', desc:'Daily service, AC buses', fee:8000 },
-    { id:7, title:'Unjha - Ganpat University', desc:'Daily service, AC buses', fee:10000 },
-    { id:8, title:'Siddhpur - Ganpat University', desc:'Daily service, AC buses', fee:12000 },
-    { id:9, title:'Kadi - Ganpat University', desc:'Daily service, AC buses', fee:10000 },
-    { id:10, title:'Kalol - Ganpat University', desc:'Daily service, AC buses', fee:14000 },
-    { id:11, title:'Himmatnagar - Ganpat University', desc:'Daily service, AC buses', fee:16000 },
-    { id:12, title:'Idar - Ganpat University', desc:'Daily service, AC buses', fee:20000 },
-    { id:13, title:'Modasa - Ganpat University', desc:'Daily service, AC buses', fee:22000 },
-    { id:14, title:'Vijapur - Ganpat University', desc:'Daily service, AC buses', fee:11000 },
-    { id:15, title:'Kheralu - Ganpat University', desc:'Daily service, AC buses', fee:9000 },
-    { id:16, title:'Chanasma - Ganpat University', desc:'Daily service, AC buses', fee:13000 },
-    { id:17, title:'Satlasana - Ganpat University', desc:'Daily service, AC buses', fee:14000 },
-    { id:18, title:'Radhanpur - Ganpat University', desc:'Daily service, AC buses', fee:19000 },
-    { id:19, title:'Deesa - Ganpat University', desc:'Daily service, AC buses', fee:21000 },
-    { id:20, title:'Dhanera - Ganpat University', desc:'Daily service, AC buses', fee:23000 },
-    { id:21, title:'Vav - Ganpat University', desc:'Daily service, AC buses', fee:25000 },
-    { id:22, title:'Tharad - Ganpat University', desc:'Daily service, AC buses', fee:24000 },
-    { id:23, title:'Danta - Ganpat University', desc:'Daily service, AC buses', fee:26000 },
+    { id:1, title:'Ahmedabad - Ganpat University', desc:'Daily service', fee:35000 },
+    { id:2, title:'Gandhinagar - Ganpat University', desc:'Daily service', fee:28000 },
+    { id:3, title:'Mehsana - Ganpat University', desc:'Daily service', fee:12000 },
+    { id:4, title:'Palanpur - Ganpat University', desc:'Daily service', fee:18000 },
+    { id:5, title:'Patan - Ganpat University', desc:'Daily service', fee:15000 },
+    { id:6, title:'Visnagar - Ganpat University', desc:'Daily service', fee:8000 },
+    { id:7, title:'Unjha - Ganpat University', desc:'Daily service', fee:10000 },
+    { id:8, title:'Siddhpur - Ganpat University', desc:'Daily service', fee:12000 },
+    { id:9, title:'Kadi - Ganpat University', desc:'Daily service', fee:10000 },
+    { id:10, title:'Kalol - Ganpat University', desc:'Daily service', fee:14000 },
+    { id:11, title:'Himmatnagar - Ganpat University', desc:'Daily service', fee:16000 },
+    { id:12, title:'Idar - Ganpat University', desc:'Daily service', fee:20000 },
+    { id:13, title:'Modasa - Ganpat University', desc:'Daily service', fee:22000 },
+    { id:14, title:'Vijapur - Ganpat University', desc:'Daily service', fee:11000 },
+    { id:15, title:'Kheralu - Ganpat University', desc:'Daily service', fee:9000 },
+    { id:16, title:'Chanasma - Ganpat University', desc:'Daily service', fee:13000 },
+    { id:17, title:'Satlasana - Ganpat University', desc:'Daily service', fee:14000 },
+    { id:18, title:'Radhanpur - Ganpat University', desc:'Daily service', fee:19000 },
+    { id:19, title:'Deesa - Ganpat University', desc:'Daily service', fee:21000 },
+    { id:20, title:'Dhanera - Ganpat University', desc:'Daily service', fee:23000 },
+    { id:21, title:'Vav - Ganpat University', desc:'Daily service', fee:25000 },
+    { id:22, title:'Tharad - Ganpat University', desc:'Daily service', fee:24000 },
+    { id:23, title:'Danta - Ganpat University', desc:'Daily service', fee:26000 },
   ];
 
-  const PROC_FEE = 500;
+  const PROC_FEE = 0;
   let selectedRouteId = null;
+  let selectedPaymentMethod = 'upi';
 
   const routesListEl = document.getElementById('routes-list');
-  const feePassEl = document.getElementById('fee-pass');
-  const feeProcEl = document.getElementById('fee-proc');
   const feeTotalEl = document.getElementById('fee-total');
-  const paymentPassEl = document.getElementById('payment-pass');
   const paymentTotalEl = document.getElementById('payment-total');
 
   // Populate routes list
@@ -80,14 +78,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateFeeSummary() {
     const r = routes.find(x => x.id === selectedRouteId) || { fee: 0, title:'—' };
-    feePassEl.textContent = `₹${(r.fee || 0).toLocaleString()}`;
-    feeProcEl.textContent = `₹${PROC_FEE.toLocaleString()}`;
-    feeTotalEl.textContent = `₹${((r.fee || 0) + PROC_FEE).toLocaleString()}`;
-    paymentPassEl.textContent = r.title;
-    paymentTotalEl.textContent = `₹${((r.fee || 0) + PROC_FEE).toLocaleString()}`;
+    const busPassFee = r.fee || 0;
+    const totalFee = busPassFee + PROC_FEE;
+    
+    feeTotalEl.textContent = `₹${totalFee.toLocaleString()}`;
+    paymentTotalEl.textContent = `₹${totalFee.toLocaleString()}`;
   }
 
   populateRoutes();
+
+  // Payment method selection with sub-options
+  const upiOptionsEl = document.getElementById('upi-options');
+  const cardOptionsEl = document.getElementById('card-options');
+  
+  document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      selectedPaymentMethod = e.target.value;
+      if (selectedPaymentMethod === 'upi') {
+        upiOptionsEl.classList.add('active');
+        cardOptionsEl.classList.remove('active');
+      } else if (selectedPaymentMethod === 'card') {
+        cardOptionsEl.classList.add('active');
+        upiOptionsEl.classList.remove('active');
+      }
+    });
+  });
 
   // Step navigation helpers
   function showStep(index) {
@@ -117,14 +132,67 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Payment button (simulated)
-  document.getElementById('pay-btn').addEventListener('click', () => {
-    // verify at least a route selected and docs (basic)
+  document.getElementById('pay-btn').addEventListener('click', async () => {
+    // verify at least a route selected
     if (!selectedRouteId) { alert('Please select a route'); return; }
-    // Simulate payment
-    const confirmed = confirm('Simulate payment: click OK to proceed (demo).');
-    if (!confirmed) return;
-    // On success, move to confirmation
-    showStep(4);
+
+    // Collect application data
+    const applicationData = {
+      student_name: document.getElementById('app-fullname').value,
+      enrollment: document.getElementById('app-enrollment').value,
+      mobile: document.getElementById('app-mobile').value,
+      email: document.getElementById('app-email').value,
+      aadhaar: document.getElementById('app-aadhaar').value,
+      dept: document.getElementById('app-dept').value,
+      route_id: selectedRouteId,
+      route_title: routes.find(r => r.id === selectedRouteId)?.title || '',
+      fee: routes.find(r => r.id === selectedRouteId)?.fee || 0
+    };
+
+    // Validate required fields
+    const required = ['student_name', 'enrollment', 'mobile', 'email', 'aadhaar', 'dept'];
+    for (const field of required) {
+      if (!applicationData[field]) {
+        alert(`Please fill in ${field.replace('_', ' ')}`);
+        return;
+      }
+    }
+
+    // Simulate payment with selected method
+    const methodLabels = { upi: 'UPI', netbanking: 'Net Banking', card: 'Credit/Debit Card' };
+    const confirming = confirm(`Simulate payment via ${methodLabels[selectedPaymentMethod]}: click OK to proceed (demo).`);
+    if (!confirming) return;
+
+    try {
+      // Submit application to backend
+      const response = await fetch('/submit_application', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(applicationData)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Store application data in localStorage for dashboard
+        localStorage.setItem('applicationData', JSON.stringify({
+          ...applicationData,
+          id: Date.now(), // temporary ID
+          status: 'pending',
+          appliedDate: new Date().toISOString()
+        }));
+
+        // On success, move to confirmation
+        showStep(4);
+      } else {
+        alert('Failed to submit application: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      alert('Error submitting application. Please try again.');
+    }
   });
 
   // File input preview text

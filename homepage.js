@@ -27,8 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const tbody = document.getElementById('routes-body');
-  routes.forEach(r => {
+  const allRows = [];
+  routes.forEach((r, index) => {
     const tr = document.createElement('tr');
+    if (index >= 10) {
+      tr.classList.add('hidden');
+    }
     tr.innerHTML = `
       <td class="num"><div class="num-circle">${r.id}</div></td>
       <td>${r.title}</td>
@@ -42,6 +46,34 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => tr.classList.remove('selected'), 1200);
     });
     tbody.appendChild(tr);
+    allRows.push({ index, element: tr });
+  });
+
+  // Show More/Less button functionality
+  const showMoreBtn = document.getElementById('show-more-btn');
+  let showingAll = false;
+  showMoreBtn.addEventListener('click', () => {
+    if (!showingAll) {
+      // Show all routes
+      allRows.forEach(row => {
+        if (row.index >= 10) {
+          row.element.classList.remove('hidden');
+        }
+      });
+      showMoreBtn.textContent = 'Show Less Routes';
+      showMoreBtn.classList.add('showing-all');
+      showingAll = true;
+    } else {
+      // Hide routes after 10th
+      allRows.forEach(row => {
+        if (row.index >= 10) {
+          row.element.classList.add('hidden');
+        }
+      });
+      showMoreBtn.textContent = 'Show More Routes';
+      showMoreBtn.classList.remove('showing-all');
+      showingAll = false;
+    }
   });
 
   // Populate gallery with local bus images

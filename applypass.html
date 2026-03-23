@@ -23,10 +23,11 @@
         <a href="homepage.html">Home</a>
         <a class="active" href="applypass.html">Apply Pass</a>
         <a href="verify.html">Verify Pass</a>
-        <a href="kdp.html">Login</a>
+        <a href="digipass.html">Login</a>
+        <a href="admin.html">Admin</a>
+        <a href="reports.html">Reports</a>
       </nav>
       <div class="actions">
-        <button class="lang">EN</button>
         <button class="support">Support</button>
       </div>
     </div>
@@ -97,6 +98,19 @@
                 <input id="app-email" type="email" placeholder="student@example.com">
               </label>
 
+              <label class="field">
+                <span>Department</span>
+                <select id="app-dept">
+                  <option value="">Select Department</option>
+                  <option>Computer Science</option>
+                  <option>Information Technology</option>
+                  <option>Computer Engineer</option>
+                  <option>Mechanical</option>
+                  <option>Electronics</option>
+                  <option>Management</option>
+                </select>
+              </label>
+
               <label class="field full">
                 <span>Permanent Address</span>
                 <textarea id="app-address" rows="3" placeholder="Enter complete address"></textarea>
@@ -118,8 +132,6 @@
 
             <div class="fee-summary card small" id="fee-summary">
               <div class="fee-header">Fee Summary</div>
-              <div class="fee-row"><span>Bus Pass Fee</span><span id="fee-pass">₹0</span></div>
-              <div class="fee-row"><span>Processing Fee</span><span id="fee-proc">₹500</span></div>
               <div class="fee-row total"><span>Total Amount</span><span id="fee-total">₹0</span></div>
             </div>
 
@@ -162,15 +174,78 @@
           <!-- Step 4: Payment -->
           <div id="step-3" class="step">
             <h4>Payment</h4>
-            <div class="payment-card card small">
-              <p class="muted">You will be charged the total amount shown in Fee Summary. For demo this is a simulated payment.</p>
-              <div class="fee-row"><span>Selected pass</span><strong id="payment-pass">—</strong></div>
-              <div class="fee-row"><span>Total</span><strong id="payment-total">₹0</strong></div>
+            
+            <div class="payment-summary-card card-payment">
+              <div class="summary-title">Payment Summary</div>
+              <div class="summary-row total-row">
+                <span>Total Payable</span>
+                <span id="payment-total">₹0</span>
+              </div>
+            </div>
+
+            <div class="payment-methods-section">
+              <h5>Select Payment Method</h5>
+              <div class="payment-methods">
+                <label class="payment-option">
+                  <input type="radio" name="payment-method" value="upi" checked>
+                  <span>UPI Payment</span>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="payment-method" value="card">
+                  <span>Credit/Debit Card</span>
+                </label>
+              </div>
+
+              <!-- UPI Sub-options -->
+              <div id="upi-options" class="payment-suboptions active">
+                <h6>Select UPI Provider</h6>
+                <div class="suboption-list">
+                  <label class="suboption">
+                    <input type="radio" name="upi-provider" value="googlepay" checked>
+                    <span>Google Pay</span>
+                  </label>
+                  <label class="suboption">
+                    <input type="radio" name="upi-provider" value="phonepe">
+                    <span>PhonePe</span>
+                  </label>
+                  <label class="suboption">
+                    <input type="radio" name="upi-provider" value="paytm">
+                    <span>Paytm</span>
+                  </label>
+                  <label class="suboption">
+                    <input type="radio" name="upi-provider" value="bhim">
+                    <span>BHIM</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Card Sub-options -->
+              <div id="card-options" class="payment-suboptions">
+                <h6>Select Card Type</h6>
+                <div class="suboption-list">
+                  <label class="suboption">
+                    <input type="radio" name="card-type" value="visa" checked>
+                    <span>Visa Card</span>
+                  </label>
+                  <label class="suboption">
+                    <input type="radio" name="card-type" value="mastercard">
+                    <span>Mastercard</span>
+                  </label>
+                  <label class="suboption">
+                    <input type="radio" name="card-type" value="rupay">
+                    <span>RuPay</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-note">
+              <strong>Note:</strong> This is a mockup. In production, integrate with a real payment gateway (Razorpay, PayU, etc.)
             </div>
 
             <div class="actions-row">
               <button type="button" class="btn ghost prev-btn" data-prev="2">Previous</button>
-              <button type="button" class="btn primary" id="pay-btn">Pay & Confirm</button>
+              <button type="button" class="btn primary" id="pay-btn">Submit & Pay</button>
             </div>
           </div>
 

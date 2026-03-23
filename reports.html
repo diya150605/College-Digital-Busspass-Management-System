@@ -1,0 +1,215 @@
+  <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNI DigiPass — Reports</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="reports.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Reports Dashboard</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="digipass.html">Student Login</a>
+        <a href="admin.html">Admin</a>
+        <a href="reports.html" class="active">Reports</a>
+      </nav>
+      <div class="actions">
+        <button class="support">Support</button>
+        <button id="logout-btn" class="logout">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <!-- Report Filters -->
+      <div class="filters-section card">
+        <h3>Report Filters</h3>
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label>Report Type</label>
+            <select id="report-type">
+              <option value="overview">Overview</option>
+              <option value="monthly">Monthly Trends</option>
+              <option value="department">Department Analysis</option>
+              <option value="routes">Route Popularity</option>
+              <option value="revenue">Revenue Report</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Time Period</label>
+            <select id="time-period">
+              <option value="all">All Time</option>
+              <option value="this-month">This Month</option>
+              <option value="last-month">Last Month</option>
+              <option value="this-semester">This Semester</option>
+              <option value="last-semester">Last Semester</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Status</label>
+            <select id="status-filter">
+              <option value="all">All Status</option>
+              <option value="approved">Approved Only</option>
+              <option value="pending">Pending Only</option>
+              <option value="rejected">Rejected Only</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <button id="generate-report" class="btn primary">Generate Report</button>
+            <button id="export-report" class="btn secondary">Export PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card card">
+          <div class="metric-icon">📊</div>
+          <div class="metric-content">
+            <div class="metric-value" id="total-applications">0</div>
+            <div class="metric-label">Total Applications</div>
+          </div>
+        </div>
+        <div class="metric-card card">
+          <div class="metric-icon">✅</div>
+          <div class="metric-content">
+            <div class="metric-value" id="approved-count">0</div>
+            <div class="metric-label">Approved</div>
+          </div>
+        </div>
+        <div class="metric-card card">
+          <div class="metric-icon">💰</div>
+          <div class="metric-content">
+            <div class="metric-value" id="total-revenue">₹0</div>
+            <div class="metric-label">Total Revenue</div>
+          </div>
+        </div>
+        <div class="metric-card card">
+          <div class="metric-icon">📈</div>
+          <div class="metric-content">
+            <div class="metric-value" id="growth-rate">0%</div>
+            <div class="metric-label">Growth Rate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-section">
+        <div class="chart-container card">
+          <h4 id="chart-title">Applications Overview</h4>
+          <canvas id="main-chart"></canvas>
+        </div>
+
+        <div class="chart-container card">
+          <h4>Department Distribution</h4>
+          <canvas id="department-chart"></canvas>
+        </div>
+
+        <div class="chart-container card">
+          <h4>Route Popularity</h4>
+          <canvas id="route-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Detailed Report Table -->
+      <div class="report-table-section card">
+        <h4>Detailed Report</h4>
+        <div class="table-controls">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search applications...">
+          </div>
+          <div class="table-info">
+            <span id="table-info">Showing 0 entries</span>
+          </div>
+        </div>
+        <div class="table-container">
+          <table id="report-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Application ID</th>
+                <th>Student Name</th>
+                <th>Department</th>
+                <th>Route</th>
+                <th>Fee</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="report-tbody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button id="prev-page" class="btn ghost">Previous</button>
+          <span id="page-info">Page 1 of 1</span>
+          <button id="next-page" class="btn ghost">Next</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="reports.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNI DigiPass — Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Admin Dashboard</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="digipass.html">Student Login</a>
+        <a href="admin.html" class="active">Admin</a>
+        <a href="reports.html">Reports</a>
+      </nav>
+      <div class="actions">
+        <button class="support">Support</button>
+        <button id="logout-btn" class="logout">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <!-- Admin Login Form -->
+      <div id="admin-login" class="admin-login-card card">
+        <div class="login-header">
+          <h3>Admin Login</h3>
+          <p>Access the administrative dashboard</p>
+        </div>
+        <form id="admin-login-form">
+          <label class="field">
+            <span>Admin Username</span>
+            <input id="admin-username" type="text" placeholder="Enter admin username">
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input id="admin-password" type="password" placeholder="Enter password">
+          </label>
+          <button type="submit" class="btn primary full">Login</button>
+        </form>
+      </div>
+
+      <!-- Admin Dashboard -->
+      <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat card-blue">
+            <div class="stat-number" id="total-applications">0</div>
+            <div class="stat-label">Total Applications</div>
+          </div>
+          <div class="stat card-green">
+            <div class="stat-number" id="approved-applications">0</div>
+            <div class="stat-label">Approved</div>
+          </div>
+          <div class="stat card-red">
+            <div class="stat-number" id="pending-applications">0</div>
+            <div class="stat-label">Pending Review</div>
+          </div>
+          <div class="stat card-yellow">
+            <div class="stat-number" id="rejected-applications">0</div>
+            <div class="stat-label">Rejected</div>
+          </div>
+        </div>
+
+        <!-- Applications Table -->
+        <div class="applications-section card">
+          <div class="section-header">
+            <h3>Pass Applications</h3>
+            <div class="filters">
+              <select id="status-filter">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="applications-table">
+              <thead>
+                <tr>
+                  <th>Application ID</th>
+                  <th>Student Name</th>
+                  <th>Enrollment</th>
+                  <th>Route</th>
+                  <th>Status</th>
+                  <th>Applied Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="applications-tbody">
+                <!-- populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Application Details Modal -->
+        <div id="application-modal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Application Details</h3>
+              <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+              <!-- populated by JS -->
+            </div>
+            <div class="modal-actions">
+              <button id="approve-btn" class="btn primary">Approve</button>
+              <button id="reject-btn" class="btn danger">Reject</button>
+              <button id="close-modal" class="btn ghost">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="admin.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

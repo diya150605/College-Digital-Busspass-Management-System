@@ -34,28 +34,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Login form
-  document.getElementById('login').addEventListener('submit', (e) => {
+  document.getElementById('login').addEventListener('submit', async (e) => {
     e.preventDefault();
     const mobile = document.getElementById('login-mobile').value.trim();
     if (!/^\d{10}$/.test(mobile)) {
       toast('Enter a valid 10-digit mobile number', false);
       return;
     }
-    // Simulate OTP send
-    toast('OTP sent to ' + mobile);
-    // for demo, show prompt for OTP (not secure; demo only)
-    setTimeout(() => {
-      const otp = prompt('Enter the OTP (demo):\n(enter 1234 to simulate success)');
-      if (otp === '1234') {
-        toast('Login successful');
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile })
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast(data.message);
+        // Prompt for OTP
+        setTimeout(() => {
+          const otp = prompt('Enter the OTP:');
+          if (otp) {
+            verifyOTP(mobile, otp);
+          }
+        }, 600);
       } else {
-        toast('Invalid OTP', false);
+        toast(data.message, false);
       }
-    }, 600);
+    } catch (error) {
+      toast('Error connecting to server', false);
+    }
   });
 
   // Register form
-  document.getElementById('register').addEventListener('submit', (e) => {
+  document.getElementById('register').addEventListener('submit', async (e) => {
     e.preventDefault();
     const enrollment = document.getElementById('enrollment').value.trim();
     const name = document.getElementById('fullname').value.trim();
@@ -71,16 +82,49 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!/^\d{12}$/.test(aadhaar)) { toast('Enter valid 12-digit Aadhaar', false); return; }
     if (!dept) { toast('Select department', false); return; }
 
-    // Simulate register & OTP
-    toast('Registration saved. OTP sent to ' + mobile);
-    setTimeout(() => {
-      const otp = prompt('Enter the OTP (demo):\n(enter 1234 to simulate success)');
-      if (otp === '1234') {
-        toast('Registration confirmed');
+    try {
+      const response = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enrollment, name, mobile, email, aadhaar, dept })
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast(data.message);
+        // Prompt for OTP
+        setTimeout(() => {
+          const otp = prompt('Enter the OTP:');
+          if (otp) {
+            verifyOTP(mobile, otp);
+          }
+        }, 600);
       } else {
-        toast('Invalid OTP', false);
+        toast(data.message, false);
       }
-    }, 600);
+    } catch (error) {
+      toast('Error connecting to server', false);
+    }
   });
+
+  // Function to verify OTP
+  async function verifyOTP(mobile, otp) {
+    try {
+      const response = await fetch('http://localhost:5000/verify_otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile, otp })
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast(data.message);
+        // Optionally redirect to dashboard
+        // window.location.href = 'dashboard.html';
+      } else {
+        toast(data.message, false);
+      }
+    } catch (error) {
+      toast('Error verifying OTP', false);
+    }
+  }
 
 });

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GUNI DigiPass — Login / Register</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="kdp.css">
+  <link rel="stylesheet" href="digipass.css">
   <link rel="stylesheet" href="global-actions.css">
 </head>
 <body>
@@ -23,10 +23,11 @@
         <a href="homepage.html">Home</a>
         <a href="applypass.html">Apply Pass</a>
         <a href="verify.html">Verify Pass</a>
-        <a href="kdp.html">Login</a>
+        <a href="digipass.html" class="active">Login</a>
+        <a href="admin.html">Admin</a>
+        <a href="reports.html">Reports</a>
       </nav>
       <div class="actions">
-        <button class="lang">EN</button>
         <button class="support">Support</button>
       </div>
     </div>
@@ -58,7 +59,7 @@
 
             <!-- REGISTER -->
             <form id="register" class="form">
-              <h3 class="form-title">New Student Registration</h3>
+              <h3 class="form-title">New Student Signup</h3>
               <p class="form-sub">Register to apply for bus pass</p>
 
               <div class="grid">
@@ -101,6 +102,8 @@
                   <select id="department">
                     <option value="">Select Department</option>
                     <option>Computer Science</option>
+                    <option>Information Technology</option>
+                    <option>Computer Engineer</option>
                     <option>Mechanical</option>
                     <option>Electronics</option>
                     <option>Management</option>
@@ -108,7 +111,7 @@
                 </label>
               </div>
 
-              <button type="submit" class="btn primary full">Register & Send OTP</button>
+              <button type="submit" class="btn primary full">Signup & Send OTP</button>
             </form>
           </div>
         </div>
@@ -159,7 +162,7 @@
     </div>
   </footer>
 
-  <script src="kdp.js"></script>
+  <script src="digipass.js"></script>
   <script src="global-actions.js"></script>
 </body>
 </html>
