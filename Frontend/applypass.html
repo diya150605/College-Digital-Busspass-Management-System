@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="global-actions.css">
 </head>
 <body>
-  <!-- Top navigation -->
+
   <header class="topbar">
     <div class="container topbar-inner">
       <div class="brand">
@@ -23,12 +23,13 @@
         <a href="homepage.html">Home</a>
         <a class="active" href="applypass.html">Apply Pass</a>
         <a href="verify.html">Verify Pass</a>
-        <a href="digipass.html">Login</a>
+        <a href="digipass.html">Student Login</a>
         <a href="admin.html">Admin</a>
         <a href="reports.html">Reports</a>
       </nav>
       <div class="actions">
         <button class="support">Support</button>
+        <button class="logout" style="display:none">Logout</button>
       </div>
     </div>
   </header>
@@ -37,6 +38,11 @@
     <div class="container">
 
       <div class="apply-card card">
+        <!-- Restoration Notice -->
+        <div id="restoration-notice" class="restoration-notice" style="display:none;">
+          <span>✓ Your previous form data has been restored. Continue from where you left off.</span>
+        </div>
+
         <!-- Stepper -->
         <div class="stepper">
           <div class="step-item active" data-step="0">
@@ -68,20 +74,20 @@
             <div class="grid">
               <label class="field">
                 <span>Full Name</span>
-                <input id="app-fullname" type="text" placeholder="As per university records">
+                <input id="app-fullname" type="text" placeholder="As per university records" required>
               </label>
               <label class="field">
                 <span>Enrollment Number</span>
-                <input id="app-enrollment" type="text" placeholder="e.g., 21012345">
+                <input id="app-enrollment" type="text" placeholder="e.g., 21012345" required>
               </label>
 
               <label class="field">
                 <span>Date of Birth</span>
-                <input id="app-dob" type="date">
+                <input id="app-dob" type="date" required>
               </label>
               <label class="field">
                 <span>Gender</span>
-                <select id="app-gender">
+                <select id="app-gender" required>
                   <option value="">Select Gender</option>
                   <option>Male</option>
                   <option>Female</option>
@@ -91,20 +97,20 @@
 
               <label class="field">
                 <span>Mobile Number</span>
-                <input id="app-mobile" type="tel" maxlength="10" placeholder="10-digit mobile">
+                <input id="app-mobile" type="tel" maxlength="10" placeholder="10-digit mobile" required>
               </label>
               <label class="field">
                 <span>Email Address</span>
-                <input id="app-email" type="email" placeholder="student@example.com">
+                <input id="app-email" type="email" placeholder="student@example.com" required>
               </label>
 
               <label class="field">
                 <span>Department</span>
-                <select id="app-dept">
+                <select id="app-dept" required>
                   <option value="">Select Department</option>
                   <option>Computer Science</option>
                   <option>Information Technology</option>
-                  <option>Computer Engineer</option>
+                  <option>Computer Engineering</option>
                   <option>Mechanical</option>
                   <option>Electronics</option>
                   <option>Management</option>
@@ -113,7 +119,7 @@
 
               <label class="field full">
                 <span>Permanent Address</span>
-                <textarea id="app-address" rows="3" placeholder="Enter complete address"></textarea>
+                <textarea id="app-address" rows="3" placeholder="Enter complete address" required></textarea>
               </label>
             </div>
 
@@ -148,13 +154,13 @@
             <div class="doc-grid">
               <label class="doc-field">
                 <span>ID Card (Student ID)</span>
-                <input id="doc-id" type="file" accept="image/*,application/pdf">
+                <input id="doc-id" type="file" accept="image/*,application/pdf" required>
                 <div class="file-list" id="file-id">No file chosen</div>
               </label>
 
               <label class="doc-field">
                 <span>Photo (Passport size)</span>
-                <input id="doc-photo" type="file" accept="image/*">
+                <input id="doc-photo" type="file" accept="image/*" required>
                 <div class="file-list" id="file-photo">No file chosen</div>
               </label>
 
@@ -239,10 +245,6 @@
               </div>
             </div>
 
-            <div class="payment-note">
-              <strong>Note:</strong> This is a mockup. In production, integrate with a real payment gateway (Razorpay, PayU, etc.)
-            </div>
-
             <div class="actions-row">
               <button type="button" class="btn ghost prev-btn" data-prev="2">Previous</button>
               <button type="button" class="btn primary" id="pay-btn">Submit & Pay</button>
@@ -262,6 +264,19 @@
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <div id="payment-modal" class="modal-overlay">
+        <div class="modal-box">
+          <button type="button" class="modal-close" id="payment-modal-close">×</button>
+          <h3 class="modal-title" id="payment-modal-title">Scan to Pay</h3>
+          <p class="modal-text" id="payment-modal-method">Use your app to scan the QR code and complete the payment.</p>
+          <img id="payment-qr" class="modal-qr" src="qr-code.png" alt="Payment QR Code">
+          <div class="modal-actions">
+            <button type="button" class="btn primary" id="payment-confirm">Payment Completed</button>
+            <button type="button" class="btn ghost modal-cancel" id="payment-cancel">Cancel</button>
+          </div>
         </div>
       </div>
 

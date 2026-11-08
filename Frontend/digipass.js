@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.tab');
   const forms = document.querySelectorAll('.form');
 
+  // If the user is already logged in, do not show the student login page again.
+  if (localStorage.getItem('guni_authenticated') === 'true') {
+    window.location.href = 'homepage.html';
+    return;
+  }
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -16,6 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: document.querySelector('.card').offsetTop - 20, behavior: 'smooth' });
     });
   });
+
+  // Registration link click handler
+  const regLink = document.querySelector('.reg-link');
+  if (regLink) {
+    regLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const registerTab = document.querySelector('.tab[data-target="register"]');
+      if (registerTab) {
+        registerTab.click();
+      }
+    });
+  }
 
   // Helper: show simple toast
   function toast(msg, ok = true) {
@@ -33,19 +51,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => el.remove(), 2800);
   }
 
+  const collegeEmailRegex = /^[^\s@]+@gnu\.ac\.in$/i;
+  const onlyDigits = value => value.replace(/\D/g, '');
+
   // Login form
   document.getElementById('login').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const mobile = document.getElementById('login-mobile').value.trim();
-    if (!/^\d{10}$/.test(mobile)) {
-      toast('Enter a valid 10-digit mobile number', false);
+    const email = document.getElementById('login-email').value.trim();
+    if (!email) {
+      toast('College email is required', false);
+      return;
+    }
+    if (!collegeEmailRegex.test(email)) {
+      toast('Only @gnu.ac.in college email is accepted', false);
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobile })
+        body: JSON.stringify({ email })
       });
       const data = await response.json();
       if (data.success) {
@@ -54,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           const otp = prompt('Enter the OTP:');
           if (otp) {
-            verifyOTP(mobile, otp);
+            verifyOTP(email, otp);
           }
         }, 600);
       } else {
@@ -66,27 +91,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Register form
+  document.getElementById('reg-mobile').addEventListener('input', (e) => {
+    e.target.value = onlyDigits(e.target.value).slice(0, 10);
+  });
+  document.getElementById('enrollment').addEventListener('input', (e) => {
+    e.target.value = onlyDigits(e.target.value);
+  });
+
   document.getElementById('register').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const enrollment = document.getElementById('enrollment').value.trim();
+    const enrollmentInput = document.getElementById('enrollment');
+    const enrollment = enrollmentInput.value.trim();
     const name = document.getElementById('fullname').value.trim();
-    const mobile = document.getElementById('reg-mobile').value.trim();
+    const mobileField = document.getElementById('reg-mobile');
+    const mobile = onlyDigits(mobileField.value.trim());
     const email = document.getElementById('email').value.trim();
-    const aadhaar = document.getElementById('aadhaar').value.trim();
     const dept = document.getElementById('department').value;
 
     if (!enrollment) { toast('Enrollment number required', false); return; }
+    if (!/^\d+$/.test(enrollment)) { toast('Enrollment must contain only digits', false); return; }
     if (!name) { toast('Full name required', false); return; }
     if (!/^\d{10}$/.test(mobile)) { toast('Enter valid 10-digit mobile', false); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('Enter valid email', false); return; }
-    if (!/^\d{12}$/.test(aadhaar)) { toast('Enter valid 12-digit Aadhaar', false); return; }
+    if (!collegeEmailRegex.test(email)) { toast('Only @gnu.ac.in college email is accepted', false); return; }
     if (!dept) { toast('Select department', false); return; }
 
+    // Keep cleaned numeric values in the fields
+    mobileField.value = mobile;
+    enrollmentInput.value = enrollment;
+
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch('http://127.0.0.1:5000/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ enrollment, name, mobile, email, aadhaar, dept })
+        body: JSON.stringify({ enrollment, name, mobile, email, dept })
       });
       const data = await response.json();
       if (data.success) {
@@ -95,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           const otp = prompt('Enter the OTP:');
           if (otp) {
-            verifyOTP(mobile, otp);
+            verifyOTP(email, otp);
           }
         }, 600);
       } else {
@@ -107,18 +144,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Function to verify OTP
-  async function verifyOTP(mobile, otp) {
+  async function verifyOTP(email, otp) {
     try {
-      const response = await fetch('http://localhost:5000/verify_otp', {
+      const response = await fetch('http://127.0.0.1:5000/verify_otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobile, otp })
+        body: JSON.stringify({ email, otp })
       });
       const data = await response.json();
       if (data.success) {
         toast(data.message);
-        // Optionally redirect to dashboard
-        // window.location.href = 'dashboard.html';
+        // Store user data in localStorage
+        console.log('[DigiPass] Storing user data:', data.user);
+        localStorage.setItem('guni_user', JSON.stringify(data.user));
+        localStorage.setItem('guni_authenticated', 'true');
+        // Redirect to applypass page after successful login
+        setTimeout(() => {
+          window.location.href = 'applypass.html';
+        }, 1500);
       } else {
         toast(data.message, false);
       }

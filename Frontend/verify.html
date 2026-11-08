@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="verify.css">
   <link rel="stylesheet" href="global-actions.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
 </head>
 <body>
   <!-- Top navigation -->
@@ -23,12 +24,13 @@
         <a href="homepage.html">Home</a>
         <a href="applypass.html">Apply Pass</a>
         <a class="active" href="verify.html">Verify Pass</a>
-        <a href="digipass.html">Login</a>
+        <a href="digipass.html">Student Login</a>
         <a href="admin.html">Admin</a>
         <a href="reports.html">Reports</a>
       </nav>
       <div class="actions">
         <button class="support">Support</button>
+        <button class="logout" style="display:none">Logout</button>
       </div>
     </div>
   </header>
@@ -54,9 +56,11 @@
         <div class="verify-body">
           <!-- Scan area (default) -->
           <div id="mode-scan" class="mode active">
-            <div class="qr-frame" id="qr-frame" title="Click to simulate scanning a QR code">
-              <div class="qr-icon">▣▣ ▣▣</div>
-              <div class="qr-hint">Position QR code within frame<br><small>Camera will automatically scan the QR code</small></div>
+            <div id="qr-scanner" class="qr-scanner-container"></div>
+            <div class="qr-hint-text">Position QR code within frame<br><small>Camera will automatically scan the QR code</small></div>
+            <div class="scanner-buttons">
+              <button id="start-camera" class="btn primary">Start Camera</button>
+              <button id="stop-camera" class="btn ghost" style="display:none;">Stop Camera</button>
             </div>
           </div>
 
@@ -65,7 +69,7 @@
             <div class="manual-row">
               <label class="field">
                 <span class="label-text">Enter Pass ID</span>
-                <input id="manual-pass" type="text" placeholder="e.g., BP-2026-012345">
+                <input id="manual-pass" type="text" placeholder="e.g., BP-2026-012345" required>
               </label>
               <button id="manual-verify" class="btn primary">Verify</button>
             </div>

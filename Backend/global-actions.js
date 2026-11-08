@@ -25,6 +25,26 @@
     });
   }
 
+  function initAuthMenu(){
+    const authLink = document.querySelector('nav.nav a[href="digipass.html"]');
+    const logoutBtn = document.querySelector('.actions .logout');
+    const isAuthenticated = localStorage.getItem('guni_authenticated') === 'true';
+
+    if (authLink) {
+      authLink.style.display = isAuthenticated ? 'none' : '';
+    }
+    if (logoutBtn) {
+      logoutBtn.style.display = isAuthenticated ? 'inline-flex' : 'none';
+      if (isAuthenticated) {
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('guni_authenticated');
+          localStorage.removeItem('guni_user');
+          window.location.href = 'homepage.html';
+        });
+      }
+    }
+  }
+
   function openSupport(){
     if(document.querySelector('.ga-modal-backdrop')) return;
     const backdrop = document.createElement('div');
@@ -45,9 +65,9 @@
 
   // init on DOM ready
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', ()=>{ initLangButtons(); initSupportButtons(); });
+    document.addEventListener('DOMContentLoaded', ()=>{ initLangButtons(); initSupportButtons(); initAuthMenu(); });
   } else {
-    initLangButtons(); initSupportButtons();
+    initLangButtons(); initSupportButtons(); initAuthMenu();
   }
 
 })();

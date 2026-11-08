@@ -16,7 +16,7 @@
         <div class="logo">GUNI</div>
         <div class="brand-text">
           <div class="title">GUNI DigiPass</div>
-          <div class="subtitle">Admin Dashboard</div>
+          <div class="subtitle">Transportation Portal</div>
         </div>
       </div>
       <nav class="nav">
@@ -46,11 +46,11 @@
         <form id="admin-login-form">
           <label class="field">
             <span>Admin Username</span>
-            <input id="admin-username" type="text" placeholder="Enter admin username">
+            <input id="admin-username" type="text" placeholder="Enter admin username" required>
           </label>
           <label class="field">
             <span>Password</span>
-            <input id="admin-password" type="password" placeholder="Enter password">
+            <input id="admin-password" type="password" placeholder="Enter password" required>
           </label>
           <button type="submit" class="btn primary full">Login</button>
         </form>
@@ -73,7 +73,7 @@
             <div class="stat-number" id="pending-applications">0</div>
             <div class="stat-label">Pending Review</div>
           </div>
-          <div class="stat card-yellow">
+          <div class="stat card-orange">
             <div class="stat-number" id="rejected-applications">0</div>
             <div class="stat-label">Rejected</div>
           </div>
@@ -90,6 +90,7 @@
                 <option value="approved">Approved</option>
                 <option value="rejected">Rejected</option>
               </select>
+              <button id="refresh-btn" class="btn ghost">Refresh</button>
             </div>
           </div>
 
@@ -172,6 +173,9 @@
           <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
           <p>+91 2763 235100</p>
           <p>info@ganpatuniversity.ac.in</p>
+          <div class="contact-search">
+            <input type="search" placeholder="Search..." />
+          </div>
         </div>
       </div>
       <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>

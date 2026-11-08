@@ -1,13 +1,32 @@
-// verify.js — scan simulation + manual verify + result rendering
+// Check authentication - redirect to login if not authenticated
+function checkVerifyAuthentication() {
+  const isAuthenticated = localStorage.getItem('guni_authenticated');
+  if (!isAuthenticated) {
+    alert('Please login first to verify a pass.');
+    window.location.href = 'digipass.html';
+    return false;
+  }
+  return true;
+}
+
+// verify.js — camera QR scan + manual verify + result rendering
 document.addEventListener('DOMContentLoaded', () => {
+  // Check if user is authenticated
+  if (!checkVerifyAuthentication()) {
+    return;
+  }
+
   const KEY = 'guni_app_data_v1';
+  let html5QrcodeScanner = null;
 
   // UI elements
   const btnScan = document.getElementById('btn-scan');
   const btnManual = document.getElementById('btn-manual');
   const modeScan = document.getElementById('mode-scan');
   const modeManual = document.getElementById('mode-manual');
-  const qrFrame = document.getElementById('qr-frame');
+  const qrScannerContainer = document.getElementById('qr-scanner');
+  const startCameraBtn = document.getElementById('start-camera');
+  const stopCameraBtn = document.getElementById('stop-camera');
   const manualInput = document.getElementById('manual-pass');
   const manualVerify = document.getElementById('manual-verify');
 
@@ -27,17 +46,80 @@ document.addEventListener('DOMContentLoaded', () => {
   const retryScan = document.getElementById('retry-scan');
   const retryManual = document.getElementById('retry-manual');
 
+  // Initialize QR Scanner
+  function initializeQRScanner() {
+    if (html5QrcodeScanner) {
+      return; // Already initialized
+    }
+    
+    html5QrcodeScanner = new Html5Qrcode('qr-scanner');
+  }
+
+  // Start camera
+  function startCamera() {
+    if (!html5QrcodeScanner) {
+      initializeQRScanner();
+    }
+
+    html5QrcodeScanner.start(
+      { facingMode: 'environment' },
+      {
+        fps: 10,
+        qrbox: { width: 350, height: 350 }
+      },
+      (decodedText, decodedResult) => {
+        // QR code detected
+        console.log('QR Code detected:', decodedText);
+        verifyPass(decodedText.trim());
+        stopCamera(); // Stop after detecting a QR
+      },
+      (errorMessage) => {
+        // Error - but continue scanning
+      }
+    ).catch(err => {
+      console.error('Error starting camera:', err);
+      alert('Unable to access camera. Please check permissions.');
+    });
+
+    startCameraBtn.style.display = 'none';
+    stopCameraBtn.style.display = 'inline-block';
+  }
+
+  // Stop camera
+  function stopCamera() {
+    if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
+      html5QrcodeScanner.stop().then(() => {
+        startCameraBtn.style.display = 'inline-block';
+        stopCameraBtn.style.display = 'none';
+      }).catch(err => console.error('Error stopping scanner:', err));
+    }
+  }
+
   // helper: switch mode
   function switchMode(mode) {
     btnScan.classList.toggle('active', mode === 'scan');
     btnManual.classList.toggle('active', mode === 'manual');
     modeScan.classList.toggle('active', mode === 'scan');
     modeManual.classList.toggle('active', mode === 'manual');
+    
+    // Stop camera when switching away from scan mode
+    if (mode !== 'scan') {
+      stopCamera();
+    } else {
+      // Start camera when switching to scan mode
+      setTimeout(startCamera, 300);
+    }
+    
     // hide results when switching
     hideResult();
   }
+
   btnScan.addEventListener('click', () => switchMode('scan'));
   btnManual.addEventListener('click', () => switchMode('manual'));
+
+  // Camera button events
+  startCameraBtn.addEventListener('click', startCamera);
+  stopCameraBtn.addEventListener('click', stopCamera);
 
   // hide result/error
   function hideResult() {
@@ -69,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fee: 35000,
     passId: 'BP-2026-012345',
     issueDate: '01 July 2026',
-    validTill: '30 June 2025'
+    validTill: '30 June 2027'
   };
 
   // Verify a pass id against stored records or demo
@@ -115,19 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (message) errorCard.querySelector('.error-text strong').textContent = message;
   }
 
-  // simulate scanning: prompt for pass id
-  qrFrame.addEventListener('click', () => {
-    // In production: replace with camera & scan library
-    const scanned = prompt('Simulate QR scan (paste scanned pass id):\nExample: BP-2026-012345');
-    if (scanned !== null) {
-      verifyPass(scanned.trim());
-    }
-  });
-
   // manual verify
   manualVerify.addEventListener('click', () => {
     const val = manualInput.value.trim();
     verifyPass(val);
+  });
+
+  // Allow Enter key in manual input
+  manualInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      manualVerify.click();
+    }
   });
 
   // quick actions in error card
@@ -139,8 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // close result
-  resultClose.addEventListener('click', hideResult);
+  resultClose.addEventListener('click', () => {
+    hideResult();
+    switchMode('scan');
+  });
 
-  // On load set default mode
+  // On load set default mode and start camera
   switchMode('scan');
 });

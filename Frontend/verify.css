@@ -1,0 +1,107 @@
+:root{
+  --bg:#f2f6fa;
+  --card:#ffffff;
+  --primary:#1f4b93;
+  --muted:#9aa3b2;
+  --footer:#0f2630;
+  --accent:#f7c948;
+  --green:#177a6f;
+  --radius:10px;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(#f5f7fa,#f2f6fa 60%);color:#232a33;font-size:15px}
+.container{max-width:950px;margin:0 auto;padding:0 20px}
+.topbar{background:var(--footer);color:#fff;padding:12px 0}
+.topbar-inner{display:flex;align-items:center;gap:20px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--footer);display:flex;align-items:center;justify-content:center;font-weight:700}
+.brand-text .title{font-weight:600}
+.brand-text .subtitle{font-size:12px;color:#bcd4e4}
+.nav{display:flex;gap:18px;align-items:center}
+.nav a{color:#e9f2fb;text-decoration:none;font-size:14px}
+.nav a.active{border-bottom:3px solid rgba(255,255,255,0.06);padding-bottom:6px}
+.actions{display:flex;gap:8px}
+
+
+.main{padding:36px 0 60px}
+.verify-card{border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(27,40,61,0.06)}
+.verify-header{background:linear-gradient(135deg,#1f4b93 0%,#2d5fa8 100%);color:#fff;padding:28px;text-align:center}
+.verify-header h3{margin:0;font-size:28px;letter-spacing:-0.5px}
+.verify-header .sub{margin:8px 0 0;color:#e8f0ff;font-size:14px;font-weight:400}
+
+
+.verify-controls{display:flex;gap:16px;padding:20px;background:#fff;justify-content:center;flex-wrap:wrap}
+.tab-btn{flex:0 0 auto;min-width:200px;padding:14px 24px;border-radius:10px;border:2px solid #e3e7eb;background:#fff;cursor:pointer;font-weight:600;display:flex;gap:10px;align-items:center;justify-content:center;transition:all 0.3s ease;font-size:16px}
+.tab-btn:hover{border-color:#1f4b93;background:#f8faff}
+.tab-btn.active{background:#1f4b93;color:#fff;border-color:#1f4b93;box-shadow:0 4px 12px rgba(31,75,147,0.15)}
+.verify-body{padding:28px}
+
+
+.mode{display:none}
+.mode.active{display:block}
+.qr-scanner-container{width:100%;max-width:450px;height:400px;border:3px solid #1f4b93;border-radius:12px;background:#000;margin:0 auto 20px;overflow:hidden;box-shadow:0 8px 24px rgba(31,75,147,0.12)}
+.qr-scanner-container video{width:100%;height:100%;object-fit:cover}
+.qr-hint-text{text-align:center;color:#6f7b88;margin:16px 0;font-size:14px}
+.scanner-buttons{display:flex;gap:12px;justify-content:center;margin-top:20px}
+
+
+.manual-row{display:flex;gap:12px;align-items:flex-end}
+.field{display:flex;flex-direction:column}
+.label-text{font-weight:600;margin-bottom:6px;font-size:14px;color:#232a33}
+.field input{padding:12px 14px;border-radius:8px;border:1px solid #e3e7eb;width:100%;font-size:14px;transition:all 0.3s ease}
+.field input:focus{outline:none;border-color:#1f4b93;box-shadow:0 0 0 3px rgba(31,75,147,0.08)}
+.field input::placeholder{color:#bcc4d0}
+.btn{display:inline-block;padding:12px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:600;transition:all 0.3s ease;font-size:14px}
+.btn.primary{background:#1f4b93;color:#fff;box-shadow:0 2px 8px rgba(31,75,147,0.12)}
+.btn.primary:hover{background:#173a6b;box-shadow:0 4px 12px rgba(31,75,147,0.18)}
+.btn.ghost{background:#fff;border:1px solid #e3e7eb;color:#232a33}
+.btn.ghost:hover{background:#f8faff;border-color:#1f4b93}
+.btn.full{width:100%}
+
+.result-card{margin-top:24px;padding:20px;border-radius:10px;background:#f5f9ff;border:1px solid #dbe7f2}
+.result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #dbe7f2}
+.status-pill{background:#177a6f;color:#fff;padding:8px 16px;border-radius:20px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.5px}
+.result-body{display:flex;gap:24px;align-items:flex-start}
+.result-left{flex:1}
+.result-right{flex-shrink:0}
+.result-left h4{margin:0 0 8px 0;font-size:18px;font-weight:700;color:#232a33}
+.result-left .muted{font-size:13px;margin-bottom:16px}
+.meta-list{display:grid;gap:12px}
+.meta-list div{display:flex;justify-content:space-between;font-size:14px;padding:8px 0}
+.meta-list strong{color:#232a33;font-weight:600}
+.meta-list span{color:#6f7b88}
+.qr-mini{width:120px;height:120px;border:3px solid #1f4b93;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#1f4b93;font-weight:700;background:#fff;font-size:12px}
+.result-actions{display:flex;gap:8px}
+
+
+.error-card{margin-top:24px;padding:20px;border-radius:10px;background:#fef6f6;border-left:4px solid #e06a6a;border:1px solid #f0d8d8;border-left:4px solid #e06a6a}
+.error-text{display:flex;flex-direction:column}
+.error-text strong{color:#c85252;font-size:16px;margin-bottom:6px}
+.error-text .muted{color:#a87979;font-size:14px}
+.error-actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+
+.card.small{padding:14px;background:#f0f6ff;border-radius:8px;margin-top:12px;border:1px solid #dde9f5}
+.guidelines{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap}
+.guideline{flex:1;min-width:250px;padding:16px;background:#f5f9ff;border-radius:10px;border:1px solid #dbe7f2}
+.guideline h5{margin:0 0 12px 0;color:#1f4b93;font-size:14px;font-weight:700}
+.guideline ul{margin:0;padding-left:20px;color:#6f7b88;font-size:14px}
+.guideline li{margin:6px 0}
+.muted{color:#6f7b88;font-size:14px}
+
+
+.divider{border:0;height:1px;background:linear-gradient(to right,transparent,#e9edf2,transparent);margin:20px 0}
+
+
+.footer{background:var(--footer);color:#cbdbe7;padding:36px 0 14px;margin-top:28px}
+.footer-inner{display:flex;flex-direction:column;gap:18px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.col h4{color:var(--accent);margin-bottom:8px;font-size:15px}
+.footer-bottom{text-align:center;color:#9fb0bf;padding-top:12px;border-top:1px solid rgba(255,255,255,0.03);font-size:13px}
+
+@media (max-width:780px){
+  .container{padding:0 12px}
+  .manual-row{flex-direction:column;align-items:stretch}
+  .field input{width:100%}
+  .guidelines{flex-direction:column}
+}

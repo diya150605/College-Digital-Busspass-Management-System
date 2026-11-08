@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNI DigiPass — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="global-actions.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-left">
+        <button class="menu-toggle" aria-label="Open menu">☰</button>
+        <div class="brand">
+          <div class="logo">GUNI</div>
+          <div class="brand-text">
+            <div class="title">GUNI DigiPass</div>
+            <div class="subtitle">Transportation Portal</div>
+          </div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="digipass.html">Login</a>
+        <a href="admin.html">Admin</a>
+        <a href="reports.html">Reports</a>
+      </nav>
+      <div class="actions">
+        <button class="support">Support</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container dashboard-header">
+      <div>
+        <h1>Digital Bus Pass</h1>
+        <p>Your official GUNI transportation e-Pass</p>
+      </div>
+    </div>
+
+    <div class="container dashboard-grid-new">
+      <section class="card pass-dashboard-card">
+        <div class="pass-card-top">
+          <div>
+            <div class="brand-label">GUNI</div>
+            <div class="pass-type">Bus Pass</div>
+          </div>
+          <span id="pass-status" class="status-pill active">ACTIVE</span>
+        </div>
+
+        <div class="pass-card-inner">
+          <div class="pass-card-meta">
+            <div class="pass-card-profile">
+              <div class="profile-badge">
+                <div class="profile-icon">📸</div>
+                <div>
+                  <div class="profile-label" id="pass-user">Student</div>
+                  <div class="profile-detail">Enrollment No <span id="pass-enroll">23012021001</span></div>
+                  <div class="profile-detail">Department <span id="pass-dept">Computer Engineering</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="pass-card-preview">
+              <img id="pass-qrcode-img" class="pass-qr-image" alt="Pass QR Code" src="" />
+            </div>
+          </div>
+
+          <div class="pass-stats-row">
+            <div class="stat-item">
+              <div class="stat-label">Pass ID</div>
+              <div class="stat-value" id="pass-id">BP-2026-000001</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Valid Until</div>
+              <div class="stat-value" id="pass-valid">15/04/2027</div>
+            </div>
+          </div>
+
+          <div class="pass-route-row">
+            <div class="route-label">Route</div>
+            <div class="route-value" id="pass-route">Ahmedabad - Ganpat University</div>
+          </div>
+
+          <div class="pass-footer-row">
+            <div>
+              <div class="footer-label">Issue Date</div>
+              <div class="footer-value" id="pass-issue">3/20/2026</div>
+            </div>
+            <div class="footer-note">Authorized by GUNI Transport Dept</div>
+          </div>
+        </div>
+
+        <div class="pass-action-row">
+          <button id="download-pass" class="btn primary">Download Pass</button>
+          <button id="share-pass" class="btn secondary">Share Pass</button>
+          <button id="renew-pass" class="btn outline">Renew Pass</button>
+        </div>
+      </section>
+
+      <aside class="right-panel">
+        <section class="card info-card">
+          <h2>Pass Information</h2>
+          <div class="info-row">
+            <div class="info-meta"><span class="info-icon">👤</span><span>Student Name</span></div>
+            <strong id="info-name">Student</strong>
+          </div>
+          <div class="info-row">
+            <div class="info-meta"><span class="info-icon">#️⃣</span><span>Enrollment Number</span></div>
+            <strong id="info-enroll">23012021001</strong>
+          </div>
+          <div class="info-row">
+            <div class="info-meta"><span class="info-icon">🛣️</span><span>Route Details</span></div>
+            <strong id="info-route">Ahmedabad - Ganpat University</strong>
+          </div>
+          <div class="info-row">
+            <div class="info-meta"><span class="info-icon">📅</span><span>Validity Period</span></div>
+            <strong id="info-valid">3/20/2026 — 4/15/2027</strong>
+          </div>
+          <div class="info-row">
+            <div class="info-meta"><span class="info-icon">📞</span><span>Contact Number</span></div>
+            <strong id="info-mobile">9876543210</strong>
+          </div>
+          <div class="info-row">
+            <div class="info-meta"><span class="info-icon">✉️</span><span>Email Address</span></div>
+            <strong id="info-email">student@guni.ac.in</strong>
+          </div>
+        </section>
+
+        <section class="card usage-card">
+          <h2>How to Use</h2>
+          <ol>
+            <li>Show this pass to the bus driver while boarding</li>
+            <li>Driver will scan the QR code for verification</li>
+            <li>Always carry your student ID card for identification</li>
+            <li>Download and save the pass for offline access</li>
+          </ol>
+        </section>
+
+        <section class="card renew-action-card">
+          <div class="renew-card-content">
+            <div>
+              <h2>Renew Your Pass</h2>
+              <p>Extend your current bus pass validity quickly using the renewal portal.</p>
+            </div>
+            <button id="renew-pass-side" class="btn primary">Renew Pass</button>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+          <div class="contact-search">
+            <input type="search" placeholder="Search..." />
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2024 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="dashboard.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

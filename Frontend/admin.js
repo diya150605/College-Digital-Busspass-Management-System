@@ -12,54 +12,128 @@ document.addEventListener('DOMContentLoaded', () => {
   const rejectBtn = document.getElementById('reject-btn');
   const closeModal = document.getElementById('close-modal');
   const modalClose = document.querySelector('.modal-close');
+  const refreshBtn = document.getElementById('refresh-btn');
 
   let currentApplicationId = null;
   let applications = [];
 
-  // Check if admin is logged in
-  const isLoggedIn = localStorage.getItem('adminLoggedIn');
-  if (isLoggedIn) {
-    showDashboard();
-  }
-
-  // Admin login
-  adminLoginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('admin-username').value;
-    const password = document.getElementById('admin-password').value;
-
-    // Simple admin credentials (in production, use proper authentication)
-    if (username === 'admin' && password === 'admin123') {
-      localStorage.setItem('adminLoggedIn', 'true');
+  // Check if admin is logged in on page load
+  function checkAdminLogin() {
+    const adminSession = localStorage.getItem('adminLoggedIn');
+    if (adminSession === 'true') {
       showDashboard();
     } else {
-      alert('Invalid credentials');
+      showLogin();
     }
-  });
-
-  // Logout
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('adminLoggedIn');
-    showLogin();
-  });
-
-  // Show dashboard
-  function showDashboard() {
-    adminLoginCard.style.display = 'none';
-    adminDashboard.style.display = 'block';
-    loadApplications();
   }
 
-  // Show login
   function showLogin() {
     adminLoginCard.style.display = 'block';
     adminDashboard.style.display = 'none';
+    logoutBtn.style.display = 'none';
   }
 
-  // Load applications
+  function showDashboard() {
+    adminLoginCard.style.display = 'none';
+    adminDashboard.style.display = 'block';
+    logoutBtn.style.display = 'block';
+    
+    // Display admin profile info
+    const adminUser = localStorage.getItem('admin_user');
+    if (adminUser) {
+      try {
+        const admin = JSON.parse(adminUser);
+        console.log('[AdminDashboard] Logged in admin:', admin.username);
+        
+        // Update topbar to show admin info
+        const supportBtn = document.querySelector('.actions .support');
+        if (supportBtn) {
+          supportBtn.textContent = `Admin: ${admin.name || admin.username}`;
+          supportBtn.style.cursor = 'default';
+          supportBtn.style.background = 'transparent';
+          supportBtn.style.color = '#fff';
+        }
+      } catch (e) {
+        console.warn('[AdminDashboard] Failed to parse admin user:', e);
+      }
+    }
+    
+    loadApplications();
+  }
+
+  // Admin login handler
+  adminLoginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('admin-username').value.trim();
+    const password = document.getElementById('admin-password').value.trim();
+
+    if (!username) {
+      alert('Username is required');
+      return;
+    }
+    if (!password) {
+      alert('Password is required');
+      return;
+    }
+
+    try {
+      console.log('[AdminAuth] Attempting login with username:', username);
+      const response = await fetch('http://127.0.0.1:5000/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      console.log('[AdminAuth] Response status:', response.status);
+      const data = await response.json();
+      console.log('[AdminAuth] Response data:', data);
+
+      if (data.success && data.admin) {
+        console.log('[AdminAuth] Login successful:', data.admin);
+        localStorage.setItem('adminLoggedIn', 'true');
+        localStorage.setItem('admin_user', JSON.stringify(data.admin));
+        document.getElementById('admin-username').value = '';
+        document.getElementById('admin-password').value = '';
+        showDashboard();
+      } else {
+        alert(data.message || 'Invalid credentials');
+      }
+    } catch (error) {
+      console.error('[AdminAuth] Error:', error);
+      alert('Error connecting to server: ' + error.message);
+    }
+  });
+
+  // Logout handler
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('adminLoggedIn');
+    localStorage.removeItem('admin_user');
+    document.getElementById('admin-username').value = '';
+    document.getElementById('admin-password').value = '';
+    showLogin();
+  });
+
+  // Load applications and stats
   async function loadApplications() {
     try {
-      const response = await fetch('/admin/applications', {
+      // Load stats
+      const statsResponse = await fetch('http://127.0.0.1:5000/admin/stats', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (statsResponse.ok) {
+        const stats = await statsResponse.json();
+        document.getElementById('total-applications').textContent = stats.total_applications;
+        document.getElementById('approved-applications').textContent = stats.approved_applications;
+        document.getElementById('pending-applications').textContent = stats.pending_applications;
+        document.getElementById('rejected-applications').textContent = stats.rejected_applications;
+      }
+
+      // Load applications
+      const response = await fetch('http://127.0.0.1:5000/admin/applications', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -74,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Failed to load applications');
       }
     } catch (error) {
-      console.error('Error loading applications:', error);
+      console.error('Error loading data:', error);
     }
   }
 
@@ -101,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="action-btn approve-btn" data-id="${app.id}">Approve</button>
             <button class="action-btn reject-btn" data-id="${app.id}">Reject</button>
           ` : ''}
+          <button class="action-btn delete-btn" data-id="${app.id}">Delete</button>
         </td>
       `;
       applicationsTbody.appendChild(tr);
@@ -127,6 +202,15 @@ document.addEventListener('DOMContentLoaded', () => {
         updateApplicationStatus(appId, 'rejected');
       });
     });
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const appId = e.target.dataset.id;
+        if (confirm('Delete this application from the database?')) {
+          deleteApplication(appId);
+        }
+      });
+    });
   }
 
   // Update stats
@@ -147,12 +231,28 @@ document.addEventListener('DOMContentLoaded', () => {
     renderApplications(e.target.value);
   });
 
+  refreshBtn.addEventListener('click', () => {
+    loadApplications();
+  });
+
+  // Auto-refresh every 20 seconds so admin view stays in sync with database changes
+  setInterval(loadApplications, 20000);
+
   // Show application details
   function showApplicationDetails(appId) {
     const app = applications.find(a => a.id == appId);
     if (!app) return;
 
     currentApplicationId = appId;
+    let passIdHtml = '';
+    if (app.pass_id) {
+      passIdHtml = `
+        <div class="detail-item">
+          <strong>Pass ID:</strong> ${app.pass_id}
+        </div>
+      `;
+    }
+
     modalBody.innerHTML = `
       <div class="detail-grid">
         <div class="detail-item">
@@ -188,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="detail-item">
           <strong>Applied Date:</strong> ${new Date(app.created_at).toLocaleDateString()}
         </div>
+        ${passIdHtml}
       </div>
     `;
 
@@ -197,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update application status
   async function updateApplicationStatus(appId, status) {
     try {
-      const response = await fetch(`/admin/applications/${appId}/status`, {
+      const response = await fetch(`http://127.0.0.1:5000/admin/applications/${appId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -205,22 +306,57 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ status })
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         // Update local data
         const app = applications.find(a => a.id == appId);
         if (app) {
           app.status = status;
+          if (result.pass_id) {
+            app.pass_id = result.pass_id;
+          }
         }
         renderApplications(statusFilter.value);
         updateStats();
         applicationModal.style.display = 'none';
-        alert(`Application ${status} successfully!`);
+        
+        if (status === 'approved' && result.pass_id) {
+          alert(`Application approved successfully!\nPass ID: ${result.pass_id}`);
+        } else {
+          alert(`Application ${status} successfully!`);
+        }
       } else {
-        alert('Failed to update application status');
+        alert('Failed to update application status: ' + (result.message || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error updating status:', error);
       alert('Error updating application status');
+    }
+  }
+
+  async function deleteApplication(appId) {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/admin/applications/${appId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        applications = applications.filter(app => app.id != appId);
+        renderApplications(statusFilter.value);
+        updateStats();
+        applicationModal.style.display = 'none';
+        alert('Application deleted successfully.');
+      } else {
+        alert('Failed to delete application: ' + (result.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error deleting application:', error);
+      alert('Error deleting application');
     }
   }
 
@@ -251,4 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
       applicationModal.style.display = 'none';
     }
   });
+
+  // Check admin login on page load
+  checkAdminLogin();
 });

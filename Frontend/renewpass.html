@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNI DigiPass — Renew Pass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="renewpass.css">
+  <link rel="stylesheet" href="global-actions.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">GUNI</div>
+        <div class="brand-text">
+          <div class="title">GUNI DigiPass</div>
+          <div class="subtitle">Transportation Portal</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="homepage.html">Home</a>
+        <a href="applypass.html">Apply Pass</a>
+        <a href="verify.html">Verify Pass</a>
+        <a href="digipass.html">Login</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="renewpass.html" class="active">Renew Pass</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="actions">
+        <button class="support">Support</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main renew-main">
+    <div class="container renew-hero-card">
+      <div class="hero-copy">
+        <h1>Renew Your Bus Pass</h1>
+        <p>Extend your pass validity in just a few clicks and stay ready for every commute.</p>
+      </div>
+    </div>
+
+    <div class="container renew-grid">
+      <section class="card current-pass-card">
+        <div class="card-header">
+          <h2>Current Pass Details</h2>
+        </div>
+        <div class="current-pass-details">
+          <div>
+            <span class="detail-label">Pass ID</span>
+            <span id="renew-pass-id" class="detail-value">BP-2026-000001</span>
+          </div>
+          <div>
+            <span class="detail-label">Route</span>
+            <span id="renew-pass-route" class="detail-value">Route 1: Ahmedabad - GUNI</span>
+          </div>
+          <div>
+            <span class="detail-label">Current Validity</span>
+            <span id="renew-pass-valid" class="detail-value">30 June 2025</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card renewal-options-card">
+        <h2>Select Renewal Period</h2>
+        <div class="renewal-options">
+          <label class="plan-card" data-months="6" tabindex="0">
+            <input type="radio" name="renewPeriod" value="6" />
+            <div class="plan-meta">
+              <span class="plan-title">6 Months</span>
+              <span class="plan-subtitle">Half-yearly renewal</span>
+            </div>
+            <div class="plan-price">₹18,000</div>
+            <div class="plan-note">+ ₹200 processing fee</div>
+          </label>
+          <label class="plan-card recommended" data-months="12" tabindex="0">
+            <input type="radio" name="renewPeriod" value="12" checked />
+            <div class="plan-meta">
+              <span class="plan-title">12 Months</span>
+              <span class="plan-subtitle">Annual renewal</span>
+            </div>
+            <div class="plan-price">₹35,000</div>
+            <div class="plan-note">Save ₹1,000 with annual plan</div>
+            <span class="badge">Recommended</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card validity-card">
+        <h2>Validity Extension</h2>
+        <div class="validity-grid">
+          <div>
+            <span class="validity-label">Current Validity</span>
+            <span id="current-valid-display" class="validity-value">30 June 2025</span>
+          </div>
+          <div class="validity-arrow">→</div>
+          <div>
+            <span class="validity-label">New Validity</span>
+            <span id="new-valid-display" class="validity-value">30 June 2026</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card payment-summary-card">
+        <h2>Payment Summary</h2>
+        <div class="summary-row">
+          <span>Renewal Fee (<span id="summary-months">12</span> months)</span>
+          <strong id="summary-fee">₹35,000</strong>
+        </div>
+        <div class="summary-row">
+          <span>Processing Fee</span>
+          <strong>₹200</strong>
+        </div>
+        <div class="summary-total">
+          <span>Total Amount</span>
+          <strong id="summary-total">₹35,200</strong>
+        </div>
+      </section>
+
+      <section class="card payment-method-card">
+        <h2>Select Payment Method</h2>
+        <label class="payment-option"><input type="radio" name="paymentMethod" value="upi" checked /> UPI Payment (Recommended)</label>
+        <label class="payment-option"><input type="radio" name="paymentMethod" value="netbanking" /> Net Banking</label>
+        <label class="payment-option"><input type="radio" name="paymentMethod" value="card" /> Credit/Debit Card</label>
+      </section>
+
+      <section class="card notes-card">
+        <h2>Important Notes</h2>
+        <ul>
+          <li>Renewal extends your existing pass without changing route or details</li>
+          <li>Payment confirmation will be sent via email and SMS</li>
+          <li>Updated pass will be available immediately after successful payment</li>
+          <li>In case of issues, contact support within 24 hours</li>
+        </ul>
+      </section>
+
+      <section class="action-footer">
+        <button id="cancel-renew" class="btn secondary">Cancel</button>
+        <button id="proceed-payment" class="btn primary">Proceed to Payment</button>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="cols">
+        <div class="col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>About GUNI</li>
+            <li>Admission</li>
+            <li>Academics</li>
+            <li>Transportation</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Life @ Campus</h4>
+          <ul>
+            <li>Hostel</li>
+            <li>Library</li>
+            <li>Sports</li>
+            <li>Cafeteria</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Spotlight</h4>
+          <ul>
+            <li>Events</li>
+            <li>News</li>
+            <li>Placements</li>
+            <li>Research</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Contact Us</h4>
+          <p>Ganpat Vidyanagar, Mehsana-Gozaria Highway, Mehsana, Gujarat 384012</p>
+          <p>+91 2763 235100</p>
+          <p>info@ganpatuniversity.ac.in</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Ganpat University. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script src="renewpass.js"></script>
+  <script src="global-actions.js"></script>
+</body>
+</html>

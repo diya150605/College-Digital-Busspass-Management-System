@@ -55,6 +55,7 @@ body{margin:0;background:linear-gradient(#f5f7fa,#f2f6fa 60%);color:#232a33;font
 .card-blue{background:var(--blue)}
 .card-green{background:var(--green)}
 .card-red{background:var(--red)}
+.card-orange{background:#ffa500}
 .card-yellow{background:#f39c12}
 .stat-number{font-size:32px;font-weight:700;margin-bottom:8px}
 .stat-label{font-size:14px;opacity:0.95;text-align:center}
@@ -98,6 +99,12 @@ body{margin:0;background:linear-gradient(#f5f7fa,#f2f6fa 60%);color:#232a33;font
 .footer-inner{display:flex;flex-direction:column;gap:18px}
 .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .col h4{color:var(--accent);margin-bottom:8px;font-size:15px}
+.col ul{list-style:none;padding:0;margin:0}
+.col ul li{margin-bottom:8px;color:#cbdbe7;font-size:14px}
+.col p{margin-bottom:8px;color:#cbdbe7;font-size:14px}
+.contact-search{margin-top:12px}
+.contact-search input{width:100%;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 12px;background:rgba(255,255,255,0.06);color:#fff;font-size:13px}
+.contact-search input::placeholder{color:rgba(255,255,255,0.6)}
 .footer-bottom{text-align:center;color:#9fb0bf;padding-top:12px;border-top:1px solid rgba(255,255,255,0.03);font-size:13px}
 
 /* Responsive */

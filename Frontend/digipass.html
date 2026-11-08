@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="global-actions.css">
 </head>
 <body>
-  <!-- Top navigation -->
+  
   <header class="topbar">
     <div class="container topbar-inner">
       <div class="brand">
@@ -23,12 +23,13 @@
         <a href="homepage.html">Home</a>
         <a href="applypass.html">Apply Pass</a>
         <a href="verify.html">Verify Pass</a>
-        <a href="digipass.html" class="active">Login</a>
+        <a href="digipass.html" class="active">Student Login</a>
         <a href="admin.html">Admin</a>
         <a href="reports.html">Reports</a>
       </nav>
       <div class="actions">
         <button class="support">Support</button>
+        <button class="logout" style="display:none">Logout</button>
       </div>
     </div>
   </header>
@@ -46,15 +47,16 @@
             <!-- LOGIN -->
             <form id="login" class="form active">
               <h3 class="form-title">Student Login</h3>
-              <p class="form-sub">Login using your registered mobile number</p>
+              <p class="form-sub">Login using your registered college email</p>
               <label class="field">
-                <span class="field-label">Mobile Number</span>
+                <span class="field-label">College Email</span>
                 <div class="input-with-icon">
-                  <svg class="icon phone" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M6.6 10.2c1.2 2.3 2.9 4 5.2 5.2l1.3-1.3c.2-.2.5-.3.8-.2 1 .3 2.1.5 3.4.5.4 0 .8.3.9.7l.5 2.1c.1.5-.2 1-.7 1.2C18.7 21 10.9 21 3.8 13.9  -..."/></svg>
-                  <input id="login-mobile" type="tel" placeholder="Enter 10-digit mobile number" maxlength="10" />
+                  <svg class="icon mail" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M20 4H4c-1.1 0-2 .9-2 2v12..."/></svg>
+                  <input id="login-email" type="email" placeholder="Enter your college email" required />
                 </div>
               </label>
               <button type="submit" class="btn primary full">Send OTP</button>
+              <p class="auth-link">Don't have an account? <a href="#" class="reg-link">Register here</a></p>
             </form>
 
             <!-- REGISTER -->
@@ -65,45 +67,37 @@
               <div class="grid">
                 <label class="field">
                   <span class="field-label">Enrollment Number</span>
-                  <input id="enrollment" type="text" placeholder="e.g., 21012345" />
+                  <input id="enrollment" type="text" placeholder="e.g., 21012345" required />
                 </label>
 
                 <label class="field">
                   <span class="field-label">Full Name</span>
-                  <input id="fullname" type="text" placeholder="As per university records" />
+                  <input id="fullname" type="text" placeholder="As per university records" required />
                 </label>
 
                 <label class="field">
                   <span class="field-label">Mobile Number</span>
                   <div class="input-with-icon">
                     <svg class="icon phone" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M6.6 10.2c1.2 2.3 2.9 4 5.2 5.2l1.3-1.3c.2-.2.5-.3.8-.2 1 .3 2.1.5 3.4.5.4 0 .8.3.9.7l.5 2.1c.1.5-.2 1-.7 1.2C18.7 21 10.9 21 3.8 13.9  -..."/></svg>
-                    <input id="reg-mobile" type="tel" placeholder="10-digit mobile" maxlength="10" />
+                    <input id="reg-mobile" type="tel" placeholder="10-digit mobile" maxlength="10" required />
                   </div>
                 </label>
 
                 <label class="field">
-                  <span class="field-label">Email Address</span>
+                  <span class="field-label">College Email id</span>
                   <div class="input-with-icon">
                     <svg class="icon mail" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M20 4H4c-1.1 0-2 .9-2 2v12..."/></svg>
-                    <input id="email" type="email" placeholder="student@example.com" />
-                  </div>
-                </label>
-
-                <label class="field">
-                  <span class="field-label">Aadhaar Number</span>
-                  <div class="input-with-icon">
-                    <svg class="icon id" viewBox="0 0 24 24" width="18" height="18"><path fill="#9aa3b2" d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
-                    <input id="aadhaar" type="text" placeholder="12-digit Aadhaar" maxlength="12" />
+                    <input id="email" type="email" placeholder="student@gnu.ac.in" required />
                   </div>
                 </label>
 
                 <label class="field">
                   <span class="field-label">Department</span>
-                  <select id="department">
+                  <select id="department" required>
                     <option value="">Select Department</option>
                     <option>Computer Science</option>
                     <option>Information Technology</option>
-                    <option>Computer Engineer</option>
+                    <option>Computer Engineering</option>
                     <option>Mechanical</option>
                     <option>Electronics</option>
                     <option>Management</option>

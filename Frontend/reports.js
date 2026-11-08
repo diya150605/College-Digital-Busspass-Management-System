@@ -10,17 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let applications = [];
   let filteredApplications = [];
   let currentPage = 1;
-  const itemsPerPage = 25;
+  const itemsPerPage = 20;
 
   // Charts
   let mainChart, departmentChart, routeChart;
-
-  // Check if admin is logged in
-  const isLoggedIn = localStorage.getItem('adminLoggedIn');
-  if (!isLoggedIn) {
-    window.location.href = 'admin.html';
-    return;
-  }
 
   // Logout
   logoutBtn.addEventListener('click', () => {
@@ -136,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const timePeriod = document.getElementById('time-period').value;
       const statusFilter = document.getElementById('status-filter').value;
 
-      const response = await fetch(`/reports/data?type=${reportType}&period=${timePeriod}&status=${statusFilter}`);
+      const response = await fetch(`http://127.0.0.1:5000/reports/data?type=${reportType}&period=${timePeriod}&status=${statusFilter}`);
       const data = await response.json();
 
       applications = data.applications || [];
@@ -159,20 +152,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateCharts(charts) {
-    // Main chart
-    document.getElementById('chart-title').textContent = charts.main.title;
-    mainChart.data.labels = charts.main.labels;
-    mainChart.data.datasets[0].data = charts.main.data;
+    const mainChartData = charts.main || { title: 'Applications Overview', labels: [], data: [] };
+    const departmentChartData = charts.department || { labels: [], data: [] };
+    const routeChartData = charts.route || { labels: [], data: [] };
+
+    document.getElementById('chart-title').textContent = mainChartData.title;
+    mainChart.data.labels = mainChartData.labels;
+    mainChart.data.datasets[0].data = mainChartData.data;
     mainChart.update();
 
-    // Department chart
-    departmentChart.data.labels = charts.department.labels;
-    departmentChart.data.datasets[0].data = charts.department.data;
+    departmentChart.data.labels = departmentChartData.labels;
+    departmentChart.data.datasets[0].data = departmentChartData.data;
     departmentChart.update();
 
-    // Route chart
-    routeChart.data.labels = charts.route.labels;
-    routeChart.data.datasets[0].data = charts.route.data;
+    routeChart.data.labels = routeChartData.labels;
+    routeChart.data.datasets[0].data = routeChartData.data;
     routeChart.update();
   }
 
@@ -184,27 +178,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const endIndex = startIndex + itemsPerPage;
     const pageData = filteredApplications.slice(startIndex, endIndex);
 
-    pageData.forEach(app => {
+    if (pageData.length === 0) {
       const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${new Date(app.created_at).toLocaleDateString()}</td>
-        <td>${app.id}</td>
-        <td>${app.student_name}</td>
-        <td>${app.dept}</td>
-        <td>${app.route_title}</td>
-        <td>₹${app.fee.toLocaleString()}</td>
-        <td><span class="status-badge status-${app.status}">${app.status.charAt(0).toUpperCase() + app.status.slice(1)}</span></td>
-      `;
+      tr.className = 'report-table-empty';
+      tr.innerHTML = `<td colspan="7">No applications found for the selected filters.</td>`;
       tbody.appendChild(tr);
-    });
+    } else {
+      pageData.forEach(app => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${new Date(app.created_at).toLocaleDateString()}</td>
+          <td>${app.id}</td>
+          <td>${app.student_name}</td>
+          <td>${app.dept}</td>
+          <td>${app.route_title}</td>
+          <td>₹${app.fee.toLocaleString()}</td>
+          <td><span class="status-badge status-${app.status}">${app.status.charAt(0).toUpperCase() + app.status.slice(1)}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     updatePagination();
   }
 
   function updatePagination() {
-    const maxPages = Math.ceil(filteredApplications.length / itemsPerPage);
+    const totalEntries = filteredApplications.length;
+    const maxPages = Math.max(1, Math.ceil(totalEntries / itemsPerPage));
+    const startIndex = totalEntries === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+    const endIndex = Math.min(totalEntries, currentPage * itemsPerPage);
+
     document.getElementById('page-info').textContent = `Page ${currentPage} of ${maxPages}`;
-    document.getElementById('table-info').textContent = `Showing ${filteredApplications.length} entries`;
+    document.getElementById('table-info').textContent = `Showing ${startIndex} to ${endIndex} of ${totalEntries} entries`;
 
     prevPageBtn.disabled = currentPage === 1;
     nextPageBtn.disabled = currentPage === maxPages;

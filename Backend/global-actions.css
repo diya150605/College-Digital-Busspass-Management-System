@@ -1,6 +1,27 @@
-/* Shared styles for language and support buttons + modal */
+/* Shared styles for topbar navigation and action buttons */
+.topbar .nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.topbar .nav a:hover {
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.topbar .nav a.active {
+  background: rgba(255,255,255,.14);
+  color: #fff;
+}
+.topbar .nav a.active:hover {
+  background: rgba(255,255,255,.18);
+}
+
 .actions .lang,
-.actions .support {
+.actions .support,
+.actions .logout {
   appearance: none;
   border: 1px solid rgba(0,0,0,0.08);
   background: white;
@@ -10,6 +31,14 @@
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
+}
+.actions .logout {
+  border-color: rgba(220,53,69,0.2);
+  background: #dc3545;
+  color: #fff;
+}
+.actions .logout:hover {
+  background: #c82333;
 }
 .actions .lang:hover,
 .actions .support:hover {
